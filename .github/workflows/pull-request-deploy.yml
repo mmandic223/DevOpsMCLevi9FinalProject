@@ -1,119 +1,119 @@
-# name: "Pull Request"
-# on:
-#   pull_request:
-#     types: [labeled, opened]
-#     branch: dev
-# permissions:
-#   id-token: write # required to use OIDC authentication
-#   contents: read # required to checkout the code from the repo
+name: "Pull Request"
+on:
+  pull_request:
+    types: [labeled, opened]
+    branch: dev
+permissions:
+  id-token: write # required to use OIDC authentication
+  contents: read # required to checkout the code from the repo
 
-# jobs:
-#   deploy:
-#     if: |
-#       (github.event.action == 'labeled' && github.event.label.name == 'deploy') ||
-#       (github.event.action != 'labeled' && contains(github.event.pull_request.labels.*.name, 'deploy'))
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: inject slug/short variables
-#         uses: rlespinasse/github-slug-action@v3.x
+jobs:
+  deploy:
+    if: |
+      (github.event.action == 'labeled' && github.event.label.name == 'deploy') ||
+      (github.event.action != 'labeled' && contains(github.event.pull_request.labels.*.name, 'deploy'))
+    runs-on: ubuntu-latest
+    steps:
+      - name: inject slug/short variables
+        uses: rlespinasse/github-slug-action@v3.x
 
-#       - name: set STAGE variable in environment for next steps
-#         run: echo "STAGE=pr-${{ github.event.number }}-${{ env.GITHUB_HEAD_REF_SLUG }}" >> $GITHUB_ENV
+      - name: set STAGE variable in environment for next steps
+        run: echo "STAGE=pr-${{ github.event.number }}-${{ env.GITHUB_HEAD_REF_SLUG }}" >> $GITHUB_ENV
 
-#       - name: create a github deployment
-#         uses: bobheadxi/deployments@v0.5.2
-#         id: deployment
-#         with:
-#           step: start
-#           token: ${{ secrets.GITHUB_TOKEN }}
-#           env: ${{ env.STAGE }}
-#           ref: ${{ github.head_ref }}
-#           no_override: false
-#           transient: true
+      - name: create a github deployment
+        uses: bobheadxi/deployments@v0.5.2
+        id: deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: ${{ env.STAGE }}
+          ref: ${{ github.head_ref }}
+          no_override: false
+          transient: true
 
-#       - name: checkout the files
-#         uses: actions/checkout@v2
+      - name: checkout the files
+        uses: actions/checkout@v2
 
-#       # - name: install requirements
-#       #   uses: actions/setup-python@v4
-#       #   with:
-#       #     python-version: '3.8'aws-actions/configure-aws-credentials@v1
-#       #     cache: 'pip' # caching pip dependencies
-#       #   run: pip install -r requirements.txt
-#       # - name: configure AWS credentials
-#       #   uses: 
-#       #   with:
-#       #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#       #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#       #     aws-region: eu-west-1
-#       - name: configure aws credentials
-#         uses: aws-actions/configure-aws-credentials@v1
-#         with:
-#           role-to-assume: arn:aws:iam::802288441694:role/mm-github-actions-role-test
-#           role-duration-seconds: 900 # the ttl of the session, in seconds.
-#           aws-region: us-west-1 # use your region here.
+      # - name: install requirements
+      #   uses: actions/setup-python@v4
+      #   with:
+      #     python-version: '3.8'aws-actions/configure-aws-credentials@v1
+      #     cache: 'pip' # caching pip dependencies
+      #   run: pip install -r requirements.txt
+      # - name: configure AWS credentials
+      #   uses: 
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: eu-west-1
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::802288441694:role/mm-github-actions-role-test
+          role-duration-seconds: 900 # the ttl of the session, in seconds.
+          aws-region: us-west-1 # use your region here.
 
-#       - name: install npm
-#         run: 'sudo apt update -y && sudo apt install nodejs npm -y'
+      - name: install npm
+        run: 'sudo apt update -y && sudo apt install nodejs npm -y'
 
-#       - name: install aws-cdk
-#         run: 'sudo npm install -g aws-cdk'
+      - name: install aws-cdk
+        run: 'sudo npm install -g aws-cdk'
 
-#       - name: install requirements
-#         run: 'pip3 install -r requirements.txt'
+      - name: install requirements
+        run: 'pip3 install -r requirements.txt'
 
-#       - name: deploy the stack on AWS
-#         id: cdk_deploy
-#         run: |
-#           echo Preparing environment variables
-#           TAG=$(echo ${{ github.event.number }} | cut -c 1-7) 
-#           echo $TAG
-#           cat .env
-#           sed -i '/TAG/c\TAG='"${TAG}"'' .env
-#           cat .env
+      - name: deploy the stack on AWS
+        id: cdk_deploy
+        run: |
+          echo Preparing environment variables
+          TAG=$(echo ${{ github.event.number }} | cut -c 1-7) 
+          echo $TAG
+          cat .env
+          sed -i '/TAG/c\TAG='"${TAG}"'' .env
+          cat .env
 
-#           echo Preparing networking stack...
-#           cdk diff networking-stack-mm
-#           cdk synth networking-stack-mm
+          echo Preparing networking stack...
+          cdk diff networking-stack-mm
+          cdk synth networking-stack-mm
 
-#           echo Preparing api-dynamo-lambda stack...
-#           cdk diff lambda-api-dynamo-stack-mm
-#           cdk synth lambda-api-dynamo-stack-mm
+          echo Preparing api-dynamo-lambda stack...
+          cdk diff lambda-api-dynamo-stack-mm
+          cdk synth lambda-api-dynamo-stack-mm
 
-#           echo Entering build phase
+          echo Entering build phase
 
-#           cdk deploy --require-approval never --verbose networking-stack-mm
+          cdk deploy --require-approval never --verbose networking-stack-mm
       
-#           cdk deploy --require-approval never --verbose lambda-api-dynamo-stack-mm
-#           echo Pulling APIGW id
-#           APIID=$(aws cloudformation --region eu-west-1 describe-stacks --stack-name lambda-api-dynamo-stack-mm --query 'Stacks[0].Outputs[?OutputKey==`apiid`].OutputValue' --output text)
-#           cat ./aws_final_project/EcsCluster/swagger.json | jq '(.paths."/masterclass"[].parameters[] | select(.default)).default |= "'$APIID'"' ./aws_final_project/EcsCluster/swagger.json > parsing.txt && cp parsing.txt ./aws_final_project/EcsCluster/swagger.json
+          cdk deploy --require-approval never --verbose lambda-api-dynamo-stack-mm
+          echo Pulling APIGW id
+          APIID=$(aws cloudformation --region eu-west-1 describe-stacks --stack-name lambda-api-dynamo-stack-mm --query 'Stacks[0].Outputs[?OutputKey==`apiid`].OutputValue' --output text)
+          cat ./aws_final_project/EcsCluster/swagger.json | jq '(.paths."/masterclass"[].parameters[] | select(.default)).default |= "'$APIID'"' ./aws_final_project/EcsCluster/swagger.json > parsing.txt && cp parsing.txt ./aws_final_project/EcsCluster/swagger.json
 
-#           echo Logging in to Amazon ECR...
-#           aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 446835144354.dkr.ecr.eu-west-1.amazonaws.com
+          echo Logging in to Amazon ECR...
+          aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 446835144354.dkr.ecr.eu-west-1.amazonaws.com
 
-#           echo Build started on `date`
-#           echo Building the Docker image...
-#           docker build -t markomandic/openapiui ./aws_final_project/EcsCluster/
-#           echo Tagging image
-#           docker tag markomandic/openapiui 446835144354.dkr.ecr.eu-west-1.amazonaws.com/markomandicecrrepo:$TAG
+          echo Build started on `date`
+          echo Building the Docker image...
+          docker build -t markomandic/openapiui ./aws_final_project/EcsCluster/
+          echo Tagging image
+          docker tag markomandic/openapiui 446835144354.dkr.ecr.eu-west-1.amazonaws.com/markomandicecrrepo:$TAG
 
-#           echo Pushing the Docker images...
-#           docker push 446835144354.dkr.ecr.eu-west-1.amazonaws.com/markomandicecrrepo:$TAG
-#           echo Push completed on `date`
+          echo Pushing the Docker images...
+          docker push 446835144354.dkr.ecr.eu-west-1.amazonaws.com/markomandicecrrepo:$TAG
+          echo Push completed on `date`
 
-#           echo ECS deploy
-#           echo Preparing ecs-cluster stack...
-#           cdk diff ecs-cluster-stack-mm
-#           cdk synth ecs-cluster-stack-mm
-#           cdk deploy --require-approval never --verbose ecs-cluster-stack-mm
+          echo ECS deploy
+          echo Preparing ecs-cluster stack...
+          cdk diff ecs-cluster-stack-mm
+          cdk synth ecs-cluster-stack-mm
+          cdk deploy --require-approval never --verbose ecs-cluster-stack-mm
 
-#       - name: update the github deployment status
-#         uses: bobheadxi/deployments@v0.5.2
-#         if: always()
-#         with:
-#           step: finish
-#           token: ${{ secrets.GITHUB_TOKEN }}
-#           status: ${{ job.status }}
-#           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-#           env_url: ${{ steps.cdk_deploy.outputs.env_url }}
+      - name: update the github deployment status
+        uses: bobheadxi/deployments@v0.5.2
+        if: always()
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status }}
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          env_url: ${{ steps.cdk_deploy.outputs.env_url }}
