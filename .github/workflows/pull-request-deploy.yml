@@ -44,14 +44,14 @@ jobs:
       #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
       #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       #     aws-region: eu-west-1
-      - name: configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          role-skip-session-tagging: true
-          role-to-assume: arn:aws:iam::802288441694:role/mm-github-actions-role-test
-          aws-region: us-west-1 # use your region here.
+      # - name: configure aws credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     role-skip-session-tagging: true
+      #     role-to-assume: arn:aws:iam::802288441694:role/mm-github-actions-role-test
+      #     aws-region: us-west-1 # use your region here.
 
       - name: install npm
         run: 'sudo apt update -y && sudo apt install nodejs npm -y'
@@ -62,6 +62,51 @@ jobs:
       - name: install requirements
         run: 'pip3 install -r requirements.txt'
 
+      # - name: deploy the stack on AWS
+      #   id: cdk_deploy
+      #   run: |
+      #     echo Preparing environment variables
+      #     TAG=$(echo ${{ github.event.number }} | cut -c 1-7) 
+      #     echo $TAG
+      #     cat .env
+      #     sed -i '/TAG/c\TAG='"${TAG}"'' .env
+      #     cat .env
+
+      #     echo Preparing networking stack...
+      #     cdk diff  
+      #     cdk synth networking-stack-mm
+
+      #     echo Preparing api-dynamo-lambda stack...
+      #     cdk diff lambda-api-dynamo-stack-mm
+      #     cdk synth lambda-api-dynamo-stack-mm
+
+      #     echo Entering build phase
+
+      #     cdk deploy --require-approval never --verbose networking-stack-mm
+      
+      #     cdk deploy --require-approval never --verbose lambda-api-dynamo-stack-mm
+      #     echo Pulling APIGW id
+      #     APIID=$(aws cloudformation --region eu-west-1 describe-stacks --stack-name lambda-api-dynamo-stack-mm --query 'Stacks[0].Outputs[?OutputKey==`apiid`].OutputValue' --output text)
+      #     cat ./aws_final_project/EcsCluster/swagger.json | jq '(.paths."/masterclass"[].parameters[] | select(.default)).default |= "'$APIID'"' ./aws_final_project/EcsCluster/swagger.json > parsing.txt && cp parsing.txt ./aws_final_project/EcsCluster/swagger.json
+
+      #     echo Logging in to Amazon ECR...
+      #     aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 446835144354.dkr.ecr.eu-west-1.amazonaws.com
+
+      #     echo Build started on `date`
+      #     echo Building the Docker image...
+      #     docker build -t markomandic/openapiui ./aws_final_project/EcsCluster/
+      #     echo Tagging image
+      #     docker tag markomandic/openapiui 446835144354.dkr.ecr.eu-west-1.amazonaws.com/markomandicecrrepo:$TAG
+
+      #     echo Pushing the Docker images...
+      #     docker push 446835144354.dkr.ecr.eu-west-1.amazonaws.com/markomandicecrrepo:$TAG
+      #     echo Push completed on `date`
+
+      #     echo ECS deploy
+      #     echo Preparing ecs-cluster stack...
+      #     cdk diff ecs-cluster-stack-mm
+      #     cdk synth ecs-cluster-stack-mm
+      #     cdk deploy --require-approval never --verbose ecs-cluster-stack-mm
       - name: deploy the stack on AWS
         id: cdk_deploy
         run: |
@@ -72,41 +117,103 @@ jobs:
           sed -i '/TAG/c\TAG='"${TAG}"'' .env
           cat .env
 
-          echo Preparing networking stack...
-          cdk diff networking-stack-mm
-          cdk synth networking-stack-mm
-
-          echo Preparing api-dynamo-lambda stack...
-          cdk diff lambda-api-dynamo-stack-mm
-          cdk synth lambda-api-dynamo-stack-mm
-
-          echo Entering build phase
-
-          cdk deploy --require-approval never --verbose networking-stack-mm
+      - name: cdk diff
+        uses: youyo/aws-cdk-github-actions@v1
+        with:
+          cdk_subcommand: 'diff'
+          cdk_stack: "networking-stack-mm"
+          actions_comment: true
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'eu-west-1'
       
-          cdk deploy --require-approval never --verbose lambda-api-dynamo-stack-mm
-          echo Pulling APIGW id
-          APIID=$(aws cloudformation --region eu-west-1 describe-stacks --stack-name lambda-api-dynamo-stack-mm --query 'Stacks[0].Outputs[?OutputKey==`apiid`].OutputValue' --output text)
-          cat ./aws_final_project/EcsCluster/swagger.json | jq '(.paths."/masterclass"[].parameters[] | select(.default)).default |= "'$APIID'"' ./aws_final_project/EcsCluster/swagger.json > parsing.txt && cp parsing.txt ./aws_final_project/EcsCluster/swagger.json
+      - name: cdk diff
+        uses: youyo/aws-cdk-github-actions@v1
+        with:
+          cdk_subcommand: 'diff'
+          cdk_stack: "lambda-api-dynamo-stack-mm"
+          actions_comment: true
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'eu-west-1'
 
-          echo Logging in to Amazon ECR...
-          aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 446835144354.dkr.ecr.eu-west-1.amazonaws.com
+      - name: cdk deploy
+        uses: youyo/aws-cdk-github-actions@v1
+        with:
+          cdk_subcommand: 'deploy'
+          cdk_stack: 'networking-stack-mm'
+          actions_comment: false
+          args: '--require-approval never'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'eu-west-1'
 
-          echo Build started on `date`
-          echo Building the Docker image...
-          docker build -t markomandic/openapiui ./aws_final_project/EcsCluster/
-          echo Tagging image
-          docker tag markomandic/openapiui 446835144354.dkr.ecr.eu-west-1.amazonaws.com/markomandicecrrepo:$TAG
+      - name: cdk deploy
+        uses: youyo/aws-cdk-github-actions@v1
+        with:
+          cdk_subcommand: 'deploy'
+          cdk_stack: 'lambda-api-dynamo-stack-mm'
+          actions_comment: false
+          args: '--require-approval never'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'eu-west-1'
 
-          echo Pushing the Docker images...
-          docker push 446835144354.dkr.ecr.eu-west-1.amazonaws.com/markomandicecrrepo:$TAG
-          echo Push completed on `date`
+      - name: Getting APIID
+        uses: ItsKarma/aws-cli@v1.70.0
+        with:
+          args: echo "APIID=$(aws cloudformation --region eu-west-1 describe-stacks --stack-name lambda-api-dynamo-stack-mm --query 'Stacks[0].Outputs[?OutputKey==`apiid`].OutputValue' --output text)" >> $GITHUB_ENV
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: "eu-west-1"
 
-          echo ECS deploy
-          echo Preparing ecs-cluster stack...
-          cdk diff ecs-cluster-stack-mm
-          cdk synth ecs-cluster-stack-mm
-          cdk deploy --require-approval never --verbose ecs-cluster-stack-mm
+      # - name: S3 Sync
+      #   uses: ItsKarma/aws-cli@v1.70.0
+      #   with:
+      #     args: aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 446835144354.dkr.ecr.eu-west-1.amazonaws.com
+      #   env:
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     AWS_DEFAULT_REGION: "eu-west-1"
+
+      - name: Build Push ECR  
+        uses: vitr/actions-build-and-upload-to-ecs@master
+        with:
+          access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          account_id: ${{ secrets.AWS_ACCOUNT_ID }}
+          dockerfile: aws_final_project/EcsCluster/Dockerfile
+          repo: markomandicrepo
+          region: eu-west-1
+          tags: ${{ env.APIID }}
+
+      - name: cdk diff
+        uses: youyo/aws-cdk-github-actions@v1
+        with:
+          cdk_subcommand: 'diff'
+          cdk_stack: "ecs-cluster-mm"
+          actions_comment: true
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'eu-west-1'
+
+      - name: cdk deploy
+        uses: youyo/aws-cdk-github-actions@v1
+        with:
+          cdk_subcommand: 'deploy'
+          cdk_stack: 'ecs-cluster-mm'
+          actions_comment: false
+          args: '--require-approval never'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'eu-west-1'
 
       - name: update the github deployment status
         uses: bobheadxi/deployments@v0.5.2
