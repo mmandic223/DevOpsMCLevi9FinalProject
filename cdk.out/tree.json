@@ -12,17 +12,17 @@
           "version": "10.1.45"
         }
       },
-      "networking-stack-mm-None": {
-        "id": "networking-stack-mm-None",
-        "path": "networking-stack-mm-None",
+      "networking-stack-mm": {
+        "id": "networking-stack-mm",
+        "path": "networking-stack-mm",
         "children": {
           "custom_vpc": {
             "id": "custom_vpc",
-            "path": "networking-stack-mm-None/custom_vpc",
+            "path": "networking-stack-mm/custom_vpc",
             "children": {
               "Resource": {
                 "id": "Resource",
-                "path": "networking-stack-mm-None/custom_vpc/Resource",
+                "path": "networking-stack-mm/custom_vpc/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::EC2::VPC",
                   "aws:cdk:cloudformation:props": {
@@ -45,11 +45,11 @@
               },
               "MMPublicSubnetSubnet1": {
                 "id": "MMPublicSubnetSubnet1",
-                "path": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet1",
+                "path": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet1",
                 "children": {
                   "Subnet": {
                     "id": "Subnet",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet1/Subnet",
+                    "path": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet1/Subnet",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
@@ -70,7 +70,7 @@
                           },
                           {
                             "key": "Name",
-                            "value": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet1"
+                            "value": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet1"
                           }
                         ]
                       }
@@ -82,7 +82,7 @@
                   },
                   "Acl": {
                     "id": "Acl",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet1/Acl",
+                    "path": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet1/Acl",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.Resource",
                       "version": "2.34.2"
@@ -90,7 +90,7 @@
                   },
                   "RouteTable": {
                     "id": "RouteTable",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet1/RouteTable",
+                    "path": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet1/RouteTable",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
                       "aws:cdk:cloudformation:props": {
@@ -100,7 +100,7 @@
                         "tags": [
                           {
                             "key": "Name",
-                            "value": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet1"
+                            "value": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet1"
                           }
                         ]
                       }
@@ -112,7 +112,7 @@
                   },
                   "RouteTableAssociation": {
                     "id": "RouteTableAssociation",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet1/RouteTableAssociation",
+                    "path": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet1/RouteTableAssociation",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
                       "aws:cdk:cloudformation:props": {
@@ -131,7 +131,7 @@
                   },
                   "DefaultRoute": {
                     "id": "DefaultRoute",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet1/DefaultRoute",
+                    "path": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet1/DefaultRoute",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Route",
                       "aws:cdk:cloudformation:props": {
@@ -157,11 +157,11 @@
               },
               "MMPublicSubnetSubnet2": {
                 "id": "MMPublicSubnetSubnet2",
-                "path": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet2",
+                "path": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet2",
                 "children": {
                   "Subnet": {
                     "id": "Subnet",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet2/Subnet",
+                    "path": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet2/Subnet",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
@@ -182,7 +182,7 @@
                           },
                           {
                             "key": "Name",
-                            "value": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet2"
+                            "value": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet2"
                           }
                         ]
                       }
@@ -194,7 +194,7 @@
                   },
                   "Acl": {
                     "id": "Acl",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet2/Acl",
+                    "path": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet2/Acl",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.Resource",
                       "version": "2.34.2"
@@ -202,7 +202,7 @@
                   },
                   "RouteTable": {
                     "id": "RouteTable",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet2/RouteTable",
+                    "path": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet2/RouteTable",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
                       "aws:cdk:cloudformation:props": {
@@ -212,7 +212,7 @@
                         "tags": [
                           {
                             "key": "Name",
-                            "value": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet2"
+                            "value": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet2"
                           }
                         ]
                       }
@@ -224,7 +224,7 @@
                   },
                   "RouteTableAssociation": {
                     "id": "RouteTableAssociation",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet2/RouteTableAssociation",
+                    "path": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet2/RouteTableAssociation",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
                       "aws:cdk:cloudformation:props": {
@@ -243,7 +243,7 @@
                   },
                   "DefaultRoute": {
                     "id": "DefaultRoute",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet2/DefaultRoute",
+                    "path": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet2/DefaultRoute",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Route",
                       "aws:cdk:cloudformation:props": {
@@ -269,11 +269,11 @@
               },
               "MMPublicSubnetSubnet3": {
                 "id": "MMPublicSubnetSubnet3",
-                "path": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet3",
+                "path": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet3",
                 "children": {
                   "Subnet": {
                     "id": "Subnet",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet3/Subnet",
+                    "path": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet3/Subnet",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
@@ -294,7 +294,7 @@
                           },
                           {
                             "key": "Name",
-                            "value": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet3"
+                            "value": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet3"
                           }
                         ]
                       }
@@ -306,7 +306,7 @@
                   },
                   "Acl": {
                     "id": "Acl",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet3/Acl",
+                    "path": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet3/Acl",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.Resource",
                       "version": "2.34.2"
@@ -314,7 +314,7 @@
                   },
                   "RouteTable": {
                     "id": "RouteTable",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet3/RouteTable",
+                    "path": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet3/RouteTable",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
                       "aws:cdk:cloudformation:props": {
@@ -324,7 +324,7 @@
                         "tags": [
                           {
                             "key": "Name",
-                            "value": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet3"
+                            "value": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet3"
                           }
                         ]
                       }
@@ -336,7 +336,7 @@
                   },
                   "RouteTableAssociation": {
                     "id": "RouteTableAssociation",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet3/RouteTableAssociation",
+                    "path": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet3/RouteTableAssociation",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
                       "aws:cdk:cloudformation:props": {
@@ -355,7 +355,7 @@
                   },
                   "DefaultRoute": {
                     "id": "DefaultRoute",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPublicSubnetSubnet3/DefaultRoute",
+                    "path": "networking-stack-mm/custom_vpc/MMPublicSubnetSubnet3/DefaultRoute",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Route",
                       "aws:cdk:cloudformation:props": {
@@ -381,11 +381,11 @@
               },
               "MMPrivateSubnetSubnet1": {
                 "id": "MMPrivateSubnetSubnet1",
-                "path": "networking-stack-mm-None/custom_vpc/MMPrivateSubnetSubnet1",
+                "path": "networking-stack-mm/custom_vpc/MMPrivateSubnetSubnet1",
                 "children": {
                   "Subnet": {
                     "id": "Subnet",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPrivateSubnetSubnet1/Subnet",
+                    "path": "networking-stack-mm/custom_vpc/MMPrivateSubnetSubnet1/Subnet",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
@@ -406,7 +406,7 @@
                           },
                           {
                             "key": "Name",
-                            "value": "networking-stack-mm-None/custom_vpc/MMPrivateSubnetSubnet1"
+                            "value": "networking-stack-mm/custom_vpc/MMPrivateSubnetSubnet1"
                           }
                         ]
                       }
@@ -418,7 +418,7 @@
                   },
                   "Acl": {
                     "id": "Acl",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPrivateSubnetSubnet1/Acl",
+                    "path": "networking-stack-mm/custom_vpc/MMPrivateSubnetSubnet1/Acl",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.Resource",
                       "version": "2.34.2"
@@ -426,7 +426,7 @@
                   },
                   "RouteTable": {
                     "id": "RouteTable",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPrivateSubnetSubnet1/RouteTable",
+                    "path": "networking-stack-mm/custom_vpc/MMPrivateSubnetSubnet1/RouteTable",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
                       "aws:cdk:cloudformation:props": {
@@ -436,7 +436,7 @@
                         "tags": [
                           {
                             "key": "Name",
-                            "value": "networking-stack-mm-None/custom_vpc/MMPrivateSubnetSubnet1"
+                            "value": "networking-stack-mm/custom_vpc/MMPrivateSubnetSubnet1"
                           }
                         ]
                       }
@@ -448,7 +448,7 @@
                   },
                   "RouteTableAssociation": {
                     "id": "RouteTableAssociation",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPrivateSubnetSubnet1/RouteTableAssociation",
+                    "path": "networking-stack-mm/custom_vpc/MMPrivateSubnetSubnet1/RouteTableAssociation",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
                       "aws:cdk:cloudformation:props": {
@@ -473,11 +473,11 @@
               },
               "MMPrivateSubnetSubnet2": {
                 "id": "MMPrivateSubnetSubnet2",
-                "path": "networking-stack-mm-None/custom_vpc/MMPrivateSubnetSubnet2",
+                "path": "networking-stack-mm/custom_vpc/MMPrivateSubnetSubnet2",
                 "children": {
                   "Subnet": {
                     "id": "Subnet",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPrivateSubnetSubnet2/Subnet",
+                    "path": "networking-stack-mm/custom_vpc/MMPrivateSubnetSubnet2/Subnet",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
@@ -498,7 +498,7 @@
                           },
                           {
                             "key": "Name",
-                            "value": "networking-stack-mm-None/custom_vpc/MMPrivateSubnetSubnet2"
+                            "value": "networking-stack-mm/custom_vpc/MMPrivateSubnetSubnet2"
                           }
                         ]
                       }
@@ -510,7 +510,7 @@
                   },
                   "Acl": {
                     "id": "Acl",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPrivateSubnetSubnet2/Acl",
+                    "path": "networking-stack-mm/custom_vpc/MMPrivateSubnetSubnet2/Acl",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.Resource",
                       "version": "2.34.2"
@@ -518,7 +518,7 @@
                   },
                   "RouteTable": {
                     "id": "RouteTable",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPrivateSubnetSubnet2/RouteTable",
+                    "path": "networking-stack-mm/custom_vpc/MMPrivateSubnetSubnet2/RouteTable",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
                       "aws:cdk:cloudformation:props": {
@@ -528,7 +528,7 @@
                         "tags": [
                           {
                             "key": "Name",
-                            "value": "networking-stack-mm-None/custom_vpc/MMPrivateSubnetSubnet2"
+                            "value": "networking-stack-mm/custom_vpc/MMPrivateSubnetSubnet2"
                           }
                         ]
                       }
@@ -540,7 +540,7 @@
                   },
                   "RouteTableAssociation": {
                     "id": "RouteTableAssociation",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPrivateSubnetSubnet2/RouteTableAssociation",
+                    "path": "networking-stack-mm/custom_vpc/MMPrivateSubnetSubnet2/RouteTableAssociation",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
                       "aws:cdk:cloudformation:props": {
@@ -565,11 +565,11 @@
               },
               "MMPrivateSubnetSubnet3": {
                 "id": "MMPrivateSubnetSubnet3",
-                "path": "networking-stack-mm-None/custom_vpc/MMPrivateSubnetSubnet3",
+                "path": "networking-stack-mm/custom_vpc/MMPrivateSubnetSubnet3",
                 "children": {
                   "Subnet": {
                     "id": "Subnet",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPrivateSubnetSubnet3/Subnet",
+                    "path": "networking-stack-mm/custom_vpc/MMPrivateSubnetSubnet3/Subnet",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
@@ -590,7 +590,7 @@
                           },
                           {
                             "key": "Name",
-                            "value": "networking-stack-mm-None/custom_vpc/MMPrivateSubnetSubnet3"
+                            "value": "networking-stack-mm/custom_vpc/MMPrivateSubnetSubnet3"
                           }
                         ]
                       }
@@ -602,7 +602,7 @@
                   },
                   "Acl": {
                     "id": "Acl",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPrivateSubnetSubnet3/Acl",
+                    "path": "networking-stack-mm/custom_vpc/MMPrivateSubnetSubnet3/Acl",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.Resource",
                       "version": "2.34.2"
@@ -610,7 +610,7 @@
                   },
                   "RouteTable": {
                     "id": "RouteTable",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPrivateSubnetSubnet3/RouteTable",
+                    "path": "networking-stack-mm/custom_vpc/MMPrivateSubnetSubnet3/RouteTable",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
                       "aws:cdk:cloudformation:props": {
@@ -620,7 +620,7 @@
                         "tags": [
                           {
                             "key": "Name",
-                            "value": "networking-stack-mm-None/custom_vpc/MMPrivateSubnetSubnet3"
+                            "value": "networking-stack-mm/custom_vpc/MMPrivateSubnetSubnet3"
                           }
                         ]
                       }
@@ -632,7 +632,7 @@
                   },
                   "RouteTableAssociation": {
                     "id": "RouteTableAssociation",
-                    "path": "networking-stack-mm-None/custom_vpc/MMPrivateSubnetSubnet3/RouteTableAssociation",
+                    "path": "networking-stack-mm/custom_vpc/MMPrivateSubnetSubnet3/RouteTableAssociation",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
                       "aws:cdk:cloudformation:props": {
@@ -657,7 +657,7 @@
               },
               "IGW": {
                 "id": "IGW",
-                "path": "networking-stack-mm-None/custom_vpc/IGW",
+                "path": "networking-stack-mm/custom_vpc/IGW",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::EC2::InternetGateway",
                   "aws:cdk:cloudformation:props": {
@@ -676,7 +676,7 @@
               },
               "VPCGW": {
                 "id": "VPCGW",
-                "path": "networking-stack-mm-None/custom_vpc/VPCGW",
+                "path": "networking-stack-mm/custom_vpc/VPCGW",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::EC2::VPCGatewayAttachment",
                   "aws:cdk:cloudformation:props": {
@@ -701,19 +701,19 @@
           },
           "APIendpoint": {
             "id": "APIendpoint",
-            "path": "networking-stack-mm-None/APIendpoint",
+            "path": "networking-stack-mm/APIendpoint",
             "children": {
               "SecurityGroup": {
                 "id": "SecurityGroup",
-                "path": "networking-stack-mm-None/APIendpoint/SecurityGroup",
+                "path": "networking-stack-mm/APIendpoint/SecurityGroup",
                 "children": {
                   "Resource": {
                     "id": "Resource",
-                    "path": "networking-stack-mm-None/APIendpoint/SecurityGroup/Resource",
+                    "path": "networking-stack-mm/APIendpoint/SecurityGroup/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
                       "aws:cdk:cloudformation:props": {
-                        "groupDescription": "networking-stack-mm-None/APIendpoint/SecurityGroup",
+                        "groupDescription": "networking-stack-mm/APIendpoint/SecurityGroup",
                         "securityGroupEgress": [
                           {
                             "cidrIp": "0.0.0.0/0",
@@ -767,7 +767,7 @@
               },
               "Resource": {
                 "id": "Resource",
-                "path": "networking-stack-mm-None/APIendpoint/Resource",
+                "path": "networking-stack-mm/APIendpoint/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::EC2::VPCEndpoint",
                   "aws:cdk:cloudformation:props": {
@@ -811,11 +811,11 @@
           },
           "vpc_id": {
             "id": "vpc_id",
-            "path": "networking-stack-mm-None/vpc_id",
+            "path": "networking-stack-mm/vpc_id",
             "children": {
               "Resource": {
                 "id": "Resource",
-                "path": "networking-stack-mm-None/vpc_id/Resource",
+                "path": "networking-stack-mm/vpc_id/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::SSM::Parameter",
                   "aws:cdk:cloudformation:props": {
@@ -839,7 +839,7 @@
           },
           "endpoint_id": {
             "id": "endpoint_id",
-            "path": "networking-stack-mm-None/endpoint_id",
+            "path": "networking-stack-mm/endpoint_id",
             "constructInfo": {
               "fqn": "aws-cdk-lib.CfnOutput",
               "version": "2.34.2"
@@ -847,11 +847,11 @@
           },
           "CDKMetadata": {
             "id": "CDKMetadata",
-            "path": "networking-stack-mm-None/CDKMetadata",
+            "path": "networking-stack-mm/CDKMetadata",
             "children": {
               "Default": {
                 "id": "Default",
-                "path": "networking-stack-mm-None/CDKMetadata/Default",
+                "path": "networking-stack-mm/CDKMetadata/Default",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.CfnResource",
                   "version": "2.34.2"
@@ -865,11 +865,11 @@
           },
           "Exports": {
             "id": "Exports",
-            "path": "networking-stack-mm-None/Exports",
+            "path": "networking-stack-mm/Exports",
             "children": {
               "Output{\"Ref\":\"APIendpoint49F63678\"}": {
                 "id": "Output{\"Ref\":\"APIendpoint49F63678\"}",
-                "path": "networking-stack-mm-None/Exports/Output{\"Ref\":\"APIendpoint49F63678\"}",
+                "path": "networking-stack-mm/Exports/Output{\"Ref\":\"APIendpoint49F63678\"}",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.CfnOutput",
                   "version": "2.34.2"
@@ -1087,7 +1087,7 @@
                   "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
                   "aws:cdk:cloudformation:props": {
                     "code": {
-                      "s3Bucket": "cdk-hnb659fds-assets-446835144354-eu-west-1",
+                      "s3Bucket": "cdk-hnb659fds-assets-802288441694-eu-west-1",
                       "s3Key": "c940593f66aa718cdb2dddba65291c34f184923250b727ad6d9ba0fd40d7231d.zip"
                     },
                     "role": {
@@ -1301,7 +1301,7 @@
                   "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
                   "aws:cdk:cloudformation:props": {
                     "code": {
-                      "s3Bucket": "cdk-hnb659fds-assets-446835144354-eu-west-1",
+                      "s3Bucket": "cdk-hnb659fds-assets-802288441694-eu-west-1",
                       "s3Key": "49a3a1dc21ea913055a73492951d48a9d5de6ef81d66e641d563fc6b80da8e89.zip"
                     },
                     "role": {
@@ -1384,7 +1384,7 @@
                       ],
                       "vpcEndpointIds": [
                         {
-                          "Fn::ImportValue": "networking-stack-mm-None:ExportsOutputRefAPIendpoint49F6367846148020"
+                          "Fn::ImportValue": "networking-stack-mm:ExportsOutputRefAPIendpoint49F6367846148020"
                         }
                       ]
                     },
@@ -1398,8 +1398,8 @@
                             "AWS": "*"
                           },
                           "Resource": [
-                            "arn:aws:execute-api:eu-west-1:446835144354:*/prod/GET/*",
-                            "arn:aws:execute-api:eu-west-1:446835144354:*/prod/POST/*"
+                            "arn:aws:execute-api:eu-west-1:802288441694:*/prod/GET/*",
+                            "arn:aws:execute-api:eu-west-1:802288441694:*/prod/POST/*"
                           ]
                         }
                       ],
@@ -1521,7 +1521,7 @@
                           "Ref": "RestLambdaApi65A94483"
                         },
                         "deploymentId": {
-                          "Ref": "RestLambdaApiDeploymentF252E329f7b36b6651424e2da2d520045fe247ca"
+                          "Ref": "RestLambdaApiDeploymentF252E329dd9d688c83da83e5512f8ff7ddcd2a21"
                         },
                         "methodSettings": [
                           {
@@ -1659,7 +1659,7 @@
                                               {
                                                 "Ref": "AWS::Partition"
                                               },
-                                              ":execute-api:eu-west-1:446835144354:",
+                                              ":execute-api:eu-west-1:802288441694:",
                                               {
                                                 "Ref": "RestLambdaApi65A94483"
                                               },
@@ -1700,7 +1700,7 @@
                                               {
                                                 "Ref": "AWS::Partition"
                                               },
-                                              ":execute-api:eu-west-1:446835144354:",
+                                              ":execute-api:eu-west-1:802288441694:",
                                               {
                                                 "Ref": "RestLambdaApi65A94483"
                                               },
@@ -1791,7 +1791,7 @@
                                               {
                                                 "Ref": "AWS::Partition"
                                               },
-                                              ":execute-api:eu-west-1:446835144354:",
+                                              ":execute-api:eu-west-1:802288441694:",
                                               {
                                                 "Ref": "RestLambdaApi65A94483"
                                               },
@@ -1832,7 +1832,7 @@
                                               {
                                                 "Ref": "AWS::Partition"
                                               },
-                                              ":execute-api:eu-west-1:446835144354:",
+                                              ":execute-api:eu-west-1:802288441694:",
                                               {
                                                 "Ref": "RestLambdaApi65A94483"
                                               },
