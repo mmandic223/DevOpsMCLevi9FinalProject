@@ -51,7 +51,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           role-skip-session-tagging: true
           role-to-assume: arn:aws:iam::802288441694:role/mm-github-actions-role-test
-          role-duration-seconds: 900 # the ttl of the session, in seconds.
           aws-region: us-west-1 # use your region here.
 
       - name: install npm
