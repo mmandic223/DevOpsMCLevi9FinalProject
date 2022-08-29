@@ -20,16 +20,15 @@ jobs:
       - name: set STAGE variable in environment for next steps
         run: echo "STAGE=pr-${{ github.event.number }}-${{ env.GITHUB_HEAD_REF_SLUG }}" >> $GITHUB_ENV
 
-      - name: create a github deployment
-        uses: bobheadxi/deployments@v0.5.2
+      - name: deployment
         id: deployment
+        uses: abendigo/create-deployment@v1
         with:
-          step: start
           token: ${{ secrets.GITHUB_TOKEN }}
           env: ${{ env.STAGE }}
           ref: ${{ github.head_ref }}
-          no_override: false
-          transient: true
+          # no_override: false
+          # transient: true
 
       - name: checkout the files
         uses: actions/checkout@v2
