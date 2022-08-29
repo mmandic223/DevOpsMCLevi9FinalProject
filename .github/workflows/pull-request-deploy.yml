@@ -1,4 +1,4 @@
-name: "Pull Request updatedpolicy"
+name: "Pull Request sacedaradi"
 on:
   pull_request:
     types: [labeled, opened]
