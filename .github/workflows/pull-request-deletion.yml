@@ -35,12 +35,7 @@ jobs:
       #     cache: 'pip' # caching pip dependencies
       #   run: pip install -r requirements.txt
 
-      - name: configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          role-to-assume: arn:aws:iam::802288441694:role/mm-github-actions-role-test
-          role-duration-seconds: 900 # the ttl of the session, in seconds.
-          aws-region: us-west-1 # use your region here.
+      
 
       - name: install npm
         run: 'sudo apt update -y && sudo apt install nodejs npm -y'
@@ -51,11 +46,12 @@ jobs:
       - name: install requirements
         run: 'pip3 install -r requirements.txt'
 
-      - name: destroy the stack on AWS
-        run: |
-          cdk destroy ecs-cluster-stack-mm
-          cdk destroy lambda-api-dynamo-stack-mm
-          cdk destroy networking-stack-mm
+      - name: cdk deploy test
+        uses: tj-actions/aws-cdk@v3
+        with:
+          cdk_subcommand: "destroy"
+          cdk_stack: "networking-stack-mm"
+          cdk_extra_args: "--require-approval never"
 
       - name: delete the github deployments and the corresponding environment
         uses: strumwolf/delete-deployment-environment@v1.1.0
