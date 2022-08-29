@@ -25,10 +25,8 @@ jobs:
         uses: abendigo/create-deployment@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          env: ${{ env.STAGE }}
+          payload: ${{ env.STAGE }}
           ref: ${{ github.head_ref }}
-          # no_override: false
-          # transient: true
 
       - name: checkout the files
         uses: actions/checkout@v2
