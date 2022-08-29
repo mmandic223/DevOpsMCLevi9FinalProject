@@ -112,7 +112,7 @@
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
-     "S3Bucket": "cdk-hnb659fds-assets-446835144354-eu-west-1",
+     "S3Bucket": "cdk-hnb659fds-assets-802288441694-eu-west-1",
      "S3Key": "c940593f66aa718cdb2dddba65291c34f184923250b727ad6d9ba0fd40d7231d.zip"
     },
     "Role": {
@@ -249,7 +249,7 @@
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
-     "S3Bucket": "cdk-hnb659fds-assets-446835144354-eu-west-1",
+     "S3Bucket": "cdk-hnb659fds-assets-802288441694-eu-west-1",
      "S3Key": "49a3a1dc21ea913055a73492951d48a9d5de6ef81d66e641d563fc6b80da8e89.zip"
     },
     "Role": {
@@ -311,7 +311,7 @@
      ],
      "VpcEndpointIds": [
       {
-       "Fn::ImportValue": "networking-stack-mm-None:ExportsOutputRefAPIendpoint49F6367846148020"
+       "Fn::ImportValue": "networking-stack-mm:ExportsOutputRefAPIendpoint49F6367846148020"
       }
      ]
     },
@@ -325,8 +325,8 @@
         "AWS": "*"
        },
        "Resource": [
-        "arn:aws:execute-api:eu-west-1:446835144354:*/prod/GET/*",
-        "arn:aws:execute-api:eu-west-1:446835144354:*/prod/POST/*"
+        "arn:aws:execute-api:eu-west-1:802288441694:*/prod/GET/*",
+        "arn:aws:execute-api:eu-west-1:802288441694:*/prod/POST/*"
        ]
       }
      ],
@@ -388,7 +388,7 @@
     "aws:cdk:path": "lambda-api-dynamo-stack-mm/RestLambdaApi/Account"
    }
   },
-  "RestLambdaApiDeploymentF252E329f7b36b6651424e2da2d520045fe247ca": {
+  "RestLambdaApiDeploymentF252E329dd9d688c83da83e5512f8ff7ddcd2a21": {
    "Type": "AWS::ApiGateway::Deployment",
    "Properties": {
     "RestApiId": {
@@ -414,7 +414,7 @@
      "Ref": "RestLambdaApi65A94483"
     },
     "DeploymentId": {
-     "Ref": "RestLambdaApiDeploymentF252E329f7b36b6651424e2da2d520045fe247ca"
+     "Ref": "RestLambdaApiDeploymentF252E329dd9d688c83da83e5512f8ff7ddcd2a21"
     },
     "MethodSettings": [
      {
@@ -501,7 +501,7 @@
        {
         "Ref": "AWS::Partition"
        },
-       ":execute-api:eu-west-1:446835144354:",
+       ":execute-api:eu-west-1:802288441694:",
        {
         "Ref": "RestLambdaApi65A94483"
        },
@@ -537,7 +537,7 @@
        {
         "Ref": "AWS::Partition"
        },
-       ":execute-api:eu-west-1:446835144354:",
+       ":execute-api:eu-west-1:802288441694:",
        {
         "Ref": "RestLambdaApi65A94483"
        },
@@ -608,7 +608,7 @@
        {
         "Ref": "AWS::Partition"
        },
-       ":execute-api:eu-west-1:446835144354:",
+       ":execute-api:eu-west-1:802288441694:",
        {
         "Ref": "RestLambdaApi65A94483"
        },
@@ -644,7 +644,7 @@
        {
         "Ref": "AWS::Partition"
        },
-       ":execute-api:eu-west-1:446835144354:",
+       ":execute-api:eu-west-1:802288441694:",
        {
         "Ref": "RestLambdaApi65A94483"
        },
