@@ -50,6 +50,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          role-skip-session-tagging: true
           role-to-assume: arn:aws:iam::802288441694:role/mm-github-actions-role-test
           role-duration-seconds: 900 # the ttl of the session, in seconds.
           aws-region: us-west-1 # use your region here.
