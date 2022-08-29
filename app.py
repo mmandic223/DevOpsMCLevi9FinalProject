@@ -16,7 +16,7 @@ env_EU = cdk.Environment(account="446835144354", region="eu-west-1")
 
 
 app = cdk.App()
-networkingstack = NetworkingtStack(app, f"networking-stack-mm-{os.environ.get('STAGE')}", env=env_EU)
+networkingstack = NetworkingtStack(app, "networking-stack-mm", env=env_EU)
 LambdaApiDynamoStack(app, "lambda-api-dynamo-stack-mm", networkingstack.vpc_endpoint ,env=env_EU)
 pipelinestack = PipelineStack(app, "pipeline-stack", env=env_EU)
 EcsClusterStack(app, "ecs-cluster-stack-mm",env=env_EU)
