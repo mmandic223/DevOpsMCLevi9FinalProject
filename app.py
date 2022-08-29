@@ -12,13 +12,13 @@ from dotenv import dotenv_values
 
 
 config = dotenv_values(".env")
-env_EU = cdk.Environment(account="446835144354", region="eu-west-1")
+env_EU = cdk.Environment(account="802288441694", region="eu-west-1")
 
 
 app = cdk.App()
 networkingstack = NetworkingtStack(app, "networking-stack-mm", env=env_EU)
 LambdaApiDynamoStack(app, "lambda-api-dynamo-stack-mm", networkingstack.vpc_endpoint ,env=env_EU)
-pipelinestack = PipelineStack(app, "pipeline-stack", env=env_EU)
+PipelineStack(app, "pipeline-stack", env=env_EU)
 EcsClusterStack(app, "ecs-cluster-stack-mm",env=env_EU)
 
 
