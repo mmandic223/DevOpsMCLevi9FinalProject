@@ -1,0 +1,72 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "Lambda backed API with GET and POST methods connected to dynamodb",
+      "version": "2022-08-15T12:50:39Z",
+      "title": "Marko Mandic Master Class OpenAPI"
+    },
+    "host": "api.markomandic.levi9masterclass.com",
+    "basePath": "/prod/api/v1",
+    "schemes": [
+      "https"
+    ],
+    "paths": {
+      "/masterclass": {
+        "get": {
+          "parameters": [
+            {
+              "name": "x-apigw-api-id",
+              "in": "header",
+              "description": "API Gateway ID",
+              "required": true,
+              "type": "string",
+              "default": "als0wo79yb"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation"
+            }
+          }
+        },
+        "post": {
+            "parameters": [
+                {
+                    "name": "x-apigw-api-id",
+                    "in": "header",
+                    "required":true,
+                    "type": "string",
+                    "default": "als0wo79yb"
+                },
+                {
+                  "in": "body",
+                  "name": "body",
+                  "description": "Pet object that needs to be added to the store",
+                  "required": false,
+                  "schema": {
+                    "$ref": "#/definitions/Masterclass"
+                  } 
+                }
+            ],
+            "responses": {
+              "200": {
+                "description": "Successful operation"
+                    }
+                  }
+                }
+              }
+            },
+            "definitions": {
+              "Masterclass": {
+                "type": "object",
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+        }

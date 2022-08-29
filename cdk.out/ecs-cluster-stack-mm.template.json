@@ -1,0 +1,721 @@
+{
+ "Resources": {
+  "certificateEC031123": {
+   "Type": "AWS::CertificateManager::Certificate",
+   "Properties": {
+    "DomainName": "*.markomandic.levi9masterclass.com",
+    "DomainValidationOptions": [
+     {
+      "DomainName": "*.markomandic.levi9masterclass.com",
+      "HostedZoneId": "DUMMY"
+     }
+    ],
+    "ValidationMethod": "DNS"
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/certificate/Resource"
+   }
+  },
+  "FargateCPCluster668E71F2": {
+   "Type": "AWS::ECS::Cluster",
+   "Properties": {
+    "ClusterSettings": [
+     {
+      "Name": "containerInsights",
+      "Value": "enabled"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/FargateCPCluster/Resource"
+   }
+  },
+  "FargateCPClusterBFD66A36": {
+   "Type": "AWS::ECS::ClusterCapacityProviderAssociations",
+   "Properties": {
+    "CapacityProviders": [
+     "FARGATE",
+     "FARGATE_SPOT"
+    ],
+    "Cluster": {
+     "Ref": "FargateCPCluster668E71F2"
+    },
+    "DefaultCapacityProviderStrategy": []
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/FargateCPCluster/FargateCPCluster"
+   }
+  },
+  "devAlbSgmarkomandicmasterclassB34D3C64": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "ecs-cluster-stack-mm/dev-AlbSg-markomandic-masterclass",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "from 0.0.0.0/0:443",
+      "FromPort": 443,
+      "IpProtocol": "tcp",
+      "ToPort": 443
+     }
+    ],
+    "VpcId": "vpc-12345"
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/dev-AlbSg-markomandic-masterclass/Resource"
+   }
+  },
+  "ecssecgrpC6DCC441": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "ecs-cluster-stack-mm/ecs_sec_grp",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "VpcId": "vpc-12345"
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/ecs_sec_grp/Resource"
+   }
+  },
+  "ecssecgrpfromecsclusterstackmmdevAlbSgmarkomandicmasterclass616D4433ALLTRAFFIC0F67A99F": {
+   "Type": "AWS::EC2::SecurityGroupIngress",
+   "Properties": {
+    "IpProtocol": "-1",
+    "Description": "from ecsclusterstackmmdevAlbSgmarkomandicmasterclass616D4433:ALL TRAFFIC",
+    "GroupId": {
+     "Fn::GetAtt": [
+      "ecssecgrpC6DCC441",
+      "GroupId"
+     ]
+    },
+    "SourceSecurityGroupId": {
+     "Fn::GetAtt": [
+      "devAlbSgmarkomandicmasterclassB34D3C64",
+      "GroupId"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/ecs_sec_grp/from ecsclusterstackmmdevAlbSgmarkomandicmasterclass616D4433:ALL TRAFFIC"
+   }
+  },
+  "ecssecgrpfromecsclusterstackmmmmfargateserviceLBSecurityGroup9413C84980FB7859D3": {
+   "Type": "AWS::EC2::SecurityGroupIngress",
+   "Properties": {
+    "IpProtocol": "tcp",
+    "Description": "Load balancer to target",
+    "FromPort": 80,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "ecssecgrpC6DCC441",
+      "GroupId"
+     ]
+    },
+    "SourceSecurityGroupId": {
+     "Fn::GetAtt": [
+      "mmfargateserviceLBSecurityGroupA87EC0BB",
+      "GroupId"
+     ]
+    },
+    "ToPort": 80
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/ecs_sec_grp/from ecsclusterstackmmmmfargateserviceLBSecurityGroup9413C849:80"
+   }
+  },
+  "ecssecgrpfromecsclusterstackmmdevAlbSgmarkomandicmasterclass616D443380F92E54A7": {
+   "Type": "AWS::EC2::SecurityGroupIngress",
+   "Properties": {
+    "IpProtocol": "tcp",
+    "Description": "Load balancer to target",
+    "FromPort": 80,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "ecssecgrpC6DCC441",
+      "GroupId"
+     ]
+    },
+    "SourceSecurityGroupId": {
+     "Fn::GetAtt": [
+      "devAlbSgmarkomandicmasterclassB34D3C64",
+      "GroupId"
+     ]
+    },
+    "ToPort": 80
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/ecs_sec_grp/from ecsclusterstackmmdevAlbSgmarkomandicmasterclass616D4433:80"
+   }
+  },
+  "mmfargateserviceLB0B9F53DE": {
+   "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+   "Properties": {
+    "LoadBalancerAttributes": [
+     {
+      "Key": "deletion_protection.enabled",
+      "Value": "false"
+     }
+    ],
+    "Scheme": "internet-facing",
+    "SecurityGroups": [
+     {
+      "Fn::GetAtt": [
+       "mmfargateserviceLBSecurityGroupA87EC0BB",
+       "GroupId"
+      ]
+     },
+     {
+      "Fn::GetAtt": [
+       "devAlbSgmarkomandicmasterclassB34D3C64",
+       "GroupId"
+      ]
+     }
+    ],
+    "Subnets": [
+     "s-12345",
+     "s-67890"
+    ],
+    "Type": "application"
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/mmfargateservice/LB/Resource"
+   }
+  },
+  "mmfargateserviceLBSecurityGroupA87EC0BB": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Automatically created Security Group for ELB ecsclusterstackmmmmfargateserviceLBC97D5FBD",
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow from anyone on port 443",
+      "FromPort": 443,
+      "IpProtocol": "tcp",
+      "ToPort": 443
+     },
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow from anyone on port 80",
+      "FromPort": 80,
+      "IpProtocol": "tcp",
+      "ToPort": 80
+     }
+    ],
+    "VpcId": "vpc-12345"
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/mmfargateservice/LB/SecurityGroup/Resource"
+   }
+  },
+  "mmfargateserviceLBSecurityGrouptoecsclusterstackmmecssecgrp76101904807A2A828E": {
+   "Type": "AWS::EC2::SecurityGroupEgress",
+   "Properties": {
+    "GroupId": {
+     "Fn::GetAtt": [
+      "mmfargateserviceLBSecurityGroupA87EC0BB",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "Description": "Load balancer to target",
+    "DestinationSecurityGroupId": {
+     "Fn::GetAtt": [
+      "ecssecgrpC6DCC441",
+      "GroupId"
+     ]
+    },
+    "FromPort": 80,
+    "ToPort": 80
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/mmfargateservice/LB/SecurityGroup/to ecsclusterstackmmecssecgrp76101904:80"
+   }
+  },
+  "mmfargateserviceLBPublicListener4C762FD4": {
+   "Type": "AWS::ElasticLoadBalancingV2::Listener",
+   "Properties": {
+    "DefaultActions": [
+     {
+      "TargetGroupArn": {
+       "Ref": "mmfargateserviceLBPublicListenerECSGroupA531D978"
+      },
+      "Type": "forward"
+     }
+    ],
+    "LoadBalancerArn": {
+     "Ref": "mmfargateserviceLB0B9F53DE"
+    },
+    "Certificates": [
+     {
+      "CertificateArn": {
+       "Ref": "certificateEC031123"
+      }
+     }
+    ],
+    "Port": 443,
+    "Protocol": "HTTPS"
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/mmfargateservice/LB/PublicListener/Resource"
+   }
+  },
+  "mmfargateserviceLBPublicListenerECSGroupA531D978": {
+   "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+   "Properties": {
+    "HealthCheckIntervalSeconds": 60,
+    "HealthCheckPath": "/",
+    "HealthCheckTimeoutSeconds": 20,
+    "HealthyThresholdCount": 5,
+    "Matcher": {
+     "HttpCode": "200,301,302"
+    },
+    "Port": 80,
+    "Protocol": "HTTP",
+    "TargetGroupAttributes": [
+     {
+      "Key": "stickiness.enabled",
+      "Value": "false"
+     }
+    ],
+    "TargetType": "ip",
+    "UnhealthyThresholdCount": 2,
+    "VpcId": "vpc-12345"
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/mmfargateservice/LB/PublicListener/ECSGroup/Resource"
+   }
+  },
+  "mmfargateserviceLBPublicListenerlistnertargetgroupGroup2A00E934": {
+   "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+   "Properties": {
+    "HealthCheckIntervalSeconds": 60,
+    "HealthCheckPath": "/api/v1/",
+    "HealthCheckTimeoutSeconds": 20,
+    "HealthyThresholdCount": 5,
+    "Matcher": {
+     "HttpCode": "403"
+    },
+    "Port": 443,
+    "Protocol": "HTTPS",
+    "TargetGroupAttributes": [
+     {
+      "Key": "stickiness.enabled",
+      "Value": "false"
+     }
+    ],
+    "UnhealthyThresholdCount": 2,
+    "VpcId": "vpc-12345"
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/mmfargateservice/LB/PublicListener/listner-target-groupGroup/Resource"
+   }
+  },
+  "mmfargateserviceLBPublicListenerlistnertargetgroupRule93468506": {
+   "Type": "AWS::ElasticLoadBalancingV2::ListenerRule",
+   "Properties": {
+    "Actions": [
+     {
+      "TargetGroupArn": {
+       "Ref": "mmfargateserviceLBPublicListenerlistnertargetgroupGroup2A00E934"
+      },
+      "Type": "forward"
+     }
+    ],
+    "Conditions": [
+     {
+      "Field": "path-pattern",
+      "PathPatternConfig": {
+       "Values": [
+        "/prod/api/*"
+       ]
+      }
+     }
+    ],
+    "ListenerArn": {
+     "Ref": "mmfargateserviceLBPublicListener4C762FD4"
+    },
+    "Priority": 2
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/mmfargateservice/LB/PublicListener/listner-target-groupRule/Resource"
+   }
+  },
+  "mmfargateserviceLBPublicRedirectListener3B6C1B45": {
+   "Type": "AWS::ElasticLoadBalancingV2::Listener",
+   "Properties": {
+    "DefaultActions": [
+     {
+      "RedirectConfig": {
+       "Port": "443",
+       "Protocol": "HTTPS",
+       "StatusCode": "HTTP_301"
+      },
+      "Type": "redirect"
+     }
+    ],
+    "LoadBalancerArn": {
+     "Ref": "mmfargateserviceLB0B9F53DE"
+    },
+    "Port": 80,
+    "Protocol": "HTTP"
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/mmfargateservice/LB/PublicRedirectListener/Resource"
+   }
+  },
+  "mmfargateserviceTaskDefTaskRole43458053": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/mmfargateservice/TaskDef/TaskRole/Resource"
+   }
+  },
+  "mmfargateserviceTaskDefTaskRoleDefaultPolicy44D4A09C": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "dynamodb:*",
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "mmfargateserviceTaskDefTaskRoleDefaultPolicy44D4A09C",
+    "Roles": [
+     {
+      "Ref": "mmfargateserviceTaskDefTaskRole43458053"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/mmfargateservice/TaskDef/TaskRole/DefaultPolicy/Resource"
+   }
+  },
+  "mmfargateserviceTaskDef13AAAF59": {
+   "Type": "AWS::ECS::TaskDefinition",
+   "Properties": {
+    "ContainerDefinitions": [
+     {
+      "Cpu": 256,
+      "Essential": true,
+      "Image": "446835144354.dkr.ecr.eu-west-1.amazonaws.com/markomandicecrrepo:sadjasdjbaks",
+      "LogConfiguration": {
+       "LogDriver": "awslogs",
+       "Options": {
+        "awslogs-group": {
+         "Ref": "mmfargateserviceTaskDefwebLogGroup0CE560A2"
+        },
+        "awslogs-stream-prefix": "mm",
+        "awslogs-region": "eu-west-1"
+       }
+      },
+      "Memory": 512,
+      "Name": "web",
+      "PortMappings": [
+       {
+        "ContainerPort": 80,
+        "Protocol": "tcp"
+       }
+      ]
+     }
+    ],
+    "Cpu": "256",
+    "ExecutionRoleArn": {
+     "Fn::GetAtt": [
+      "mmfargateserviceTaskDefExecutionRoleC5DA858E",
+      "Arn"
+     ]
+    },
+    "Family": "ecsclusterstackmmmmfargateserviceTaskDef5D90A78E",
+    "Memory": "512",
+    "NetworkMode": "awsvpc",
+    "RequiresCompatibilities": [
+     "FARGATE"
+    ],
+    "TaskRoleArn": {
+     "Fn::GetAtt": [
+      "mmfargateserviceTaskDefTaskRole43458053",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/mmfargateservice/TaskDef/Resource"
+   }
+  },
+  "mmfargateserviceTaskDefwebLogGroup0CE560A2": {
+   "Type": "AWS::Logs::LogGroup",
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/mmfargateservice/TaskDef/web/LogGroup/Resource"
+   }
+  },
+  "mmfargateserviceTaskDefExecutionRoleC5DA858E": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/mmfargateservice/TaskDef/ExecutionRole/Resource"
+   }
+  },
+  "mmfargateserviceTaskDefExecutionRoleDefaultPolicy5723ADE3": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "mmfargateserviceTaskDefwebLogGroup0CE560A2",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:BatchGetImage",
+        "ecr:DescribeImageScanFindings",
+        "ecr:DescribeImages",
+        "ecr:DescribeRepositories",
+        "ecr:GetAuthorizationToken",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:GetLifecyclePolicy",
+        "ecr:GetLifecyclePolicyPreview",
+        "ecr:GetRepositoryPolicy",
+        "ecr:ListImages",
+        "ecr:ListTagsForResource",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "mmfargateserviceTaskDefExecutionRoleDefaultPolicy5723ADE3",
+    "Roles": [
+     {
+      "Ref": "mmfargateserviceTaskDefExecutionRoleC5DA858E"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/mmfargateservice/TaskDef/ExecutionRole/DefaultPolicy/Resource"
+   }
+  },
+  "mmfargateserviceService53D7298B": {
+   "Type": "AWS::ECS::Service",
+   "Properties": {
+    "CapacityProviderStrategy": [
+     {
+      "CapacityProvider": "FARGATE_SPOT",
+      "Weight": 1
+     },
+     {
+      "CapacityProvider": "FARGATE",
+      "Weight": 2
+     }
+    ],
+    "Cluster": {
+     "Ref": "FargateCPCluster668E71F2"
+    },
+    "DeploymentConfiguration": {
+     "MaximumPercent": 200,
+     "MinimumHealthyPercent": 50
+    },
+    "DesiredCount": 1,
+    "EnableECSManagedTags": false,
+    "HealthCheckGracePeriodSeconds": 60,
+    "LoadBalancers": [
+     {
+      "ContainerName": "web",
+      "ContainerPort": 80,
+      "TargetGroupArn": {
+       "Ref": "mmfargateserviceLBPublicListenerECSGroupA531D978"
+      }
+     }
+    ],
+    "NetworkConfiguration": {
+     "AwsvpcConfiguration": {
+      "AssignPublicIp": "ENABLED",
+      "SecurityGroups": [
+       {
+        "Fn::GetAtt": [
+         "ecssecgrpC6DCC441",
+         "GroupId"
+        ]
+       }
+      ],
+      "Subnets": [
+       "s-12345",
+       "s-67890"
+      ]
+     }
+    },
+    "PlatformVersion": "1.4.0",
+    "TaskDefinition": {
+     "Ref": "mmfargateserviceTaskDef13AAAF59"
+    }
+   },
+   "DependsOn": [
+    "mmfargateserviceLBPublicListenerECSGroupA531D978",
+    "mmfargateserviceLBPublicListenerlistnertargetgroupGroup2A00E934",
+    "mmfargateserviceLBPublicListenerlistnertargetgroupRule93468506",
+    "mmfargateserviceLBPublicListener4C762FD4"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/mmfargateservice/Service/Service"
+   }
+  },
+  "apimarkomandiclevi9masterclassEC3E3B7F": {
+   "Type": "AWS::Route53::RecordSet",
+   "Properties": {
+    "Name": "api.markomandic.levi9masterclass.com.",
+    "Type": "A",
+    "AliasTarget": {
+     "DNSName": {
+      "Fn::Join": [
+       "",
+       [
+        "dualstack.",
+        {
+         "Fn::GetAtt": [
+          "mmfargateserviceLB0B9F53DE",
+          "DNSName"
+         ]
+        }
+       ]
+      ]
+     },
+     "HostedZoneId": {
+      "Fn::GetAtt": [
+       "mmfargateserviceLB0B9F53DE",
+       "CanonicalHostedZoneID"
+      ]
+     }
+    },
+    "HostedZoneId": "DUMMY"
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/api.markomandic.levi9masterclass/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/31Sy27CMBD8lt6N20Ir9Qr0oUpIRYE7Wpwl3WLsyF5TRVH+vY4DNAXUiz0z+/DsykM5epDDG/j2A5VvB5rWsl4wqK3I0NvgFIoYW9UKHdOGFDDuwECBTtbTX01MN6ZHG4HKxwQdPKNLwQs4hRIUcTV3dk85urH3VhEwWePFK7gi9lmC3z7jhgy1clt8rljDQAZdTzvULtDtSSVnB9i6cjLD0npi66oJeIzSME6MKrjo5c3ZUHYV/wnvpnDo/YX+kuQ0/KoEjkMaL8dlqdulRGszC/kENBiF+ZlL1OCZlI4Z65RBpthHZ9er0x7/8H4exfWaQ84R9+LL+DLyabI+vdIlCxr7nVreCIKdrDPbhdI9t7GyammHGqFtEf/AzBanp464EfFkfBzF+TJU1uWpTUIL5KZp6UfgMnAX6H5iI+YVf1pzO5JP8v7u5ssTDVwwTDuUWXf/APm/IA/QAgAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack-mm/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "mmfargateserviceLoadBalancerDNS19A36DFF": {
+   "Value": {
+    "Fn::GetAtt": [
+     "mmfargateserviceLB0B9F53DE",
+     "DNSName"
+    ]
+   }
+  },
+  "mmfargateserviceServiceURLC419B210": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "https://",
+      {
+       "Fn::GetAtt": [
+        "mmfargateserviceLB0B9F53DE",
+        "DNSName"
+       ]
+      }
+     ]
+    ]
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}
