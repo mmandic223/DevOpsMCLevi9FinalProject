@@ -1,4 +1,4 @@
-name: "Pull Request"
+name: "Pull Request sacedaradi"
 on:
   pull_request:
     types: [labeled, opened]
@@ -111,7 +111,7 @@ jobs:
         id: cdk_deploy
         run: |
           echo Preparing environment variables
-          TAG=$echo ${{ github.event.number }}
+          TAG=$(echo ${{ github.event.number }} | cut -c 1-7) 
           echo $TAG
           cat .env
           sed -i '/TAG/c\TAG='"${TAG}"'' .env
