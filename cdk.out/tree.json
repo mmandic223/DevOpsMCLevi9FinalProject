@@ -12,6 +12,171 @@
           "version": "10.1.45"
         }
       },
+      "githubconnection-stack-assume-role-mm": {
+        "id": "githubconnection-stack-assume-role-mm",
+        "path": "githubconnection-stack-assume-role-mm",
+        "children": {
+          "ghprovider": {
+            "id": "ghprovider",
+            "path": "githubconnection-stack-assume-role-mm/ghprovider",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "githubconnection-stack-assume-role-mm/ghprovider/Resource",
+                "children": {
+                  "Default": {
+                    "id": "Default",
+                    "path": "githubconnection-stack-assume-role-mm/ghprovider/Resource/Default",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.34.2"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CustomResource",
+                  "version": "2.34.2"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.OpenIdConnectProvider",
+              "version": "2.34.2"
+            }
+          },
+          "Custom::AWSCDKOpenIdConnectProviderCustomResourceProvider": {
+            "id": "Custom::AWSCDKOpenIdConnectProviderCustomResourceProvider",
+            "path": "githubconnection-stack-assume-role-mm/Custom::AWSCDKOpenIdConnectProviderCustomResourceProvider",
+            "children": {
+              "Staging": {
+                "id": "Staging",
+                "path": "githubconnection-stack-assume-role-mm/Custom::AWSCDKOpenIdConnectProviderCustomResourceProvider/Staging",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.AssetStaging",
+                  "version": "2.34.2"
+                }
+              },
+              "Role": {
+                "id": "Role",
+                "path": "githubconnection-stack-assume-role-mm/Custom::AWSCDKOpenIdConnectProviderCustomResourceProvider/Role",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.34.2"
+                }
+              },
+              "Handler": {
+                "id": "Handler",
+                "path": "githubconnection-stack-assume-role-mm/Custom::AWSCDKOpenIdConnectProviderCustomResourceProvider/Handler",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.34.2"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CustomResourceProvider",
+              "version": "2.34.2"
+            }
+          },
+          "deployment_role": {
+            "id": "deployment_role",
+            "path": "githubconnection-stack-assume-role-mm/deployment_role",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "githubconnection-stack-assume-role-mm/deployment_role/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                  "aws:cdk:cloudformation:props": {
+                    "assumeRolePolicyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "sts:AssumeRoleWithWebIdentity",
+                          "Condition": {
+                            "StringLike": {
+                              "token.actions.githubusercontent.com:sub": "repo:mmandic223/DevOpsMCLevi9FinalProject:*"
+                            }
+                          },
+                          "Effect": "Allow",
+                          "Principal": {
+                            "Federated": {
+                              "Ref": "ghprovider968B9A8A"
+                            }
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    },
+                    "maxSessionDuration": 3600,
+                    "policies": [
+                      {
+                        "policyName": "DeploymentPolicy",
+                        "policyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Resource": "arn:aws:iam::982195495700:role/cdk-*"
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        }
+                      }
+                    ],
+                    "roleName": "mmandic223-DevOpsMCLevi9FinalProject-deploy"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                  "version": "2.34.2"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Role",
+              "version": "2.34.2"
+            }
+          },
+          "DeploymentRoleArn": {
+            "id": "DeploymentRoleArn",
+            "path": "githubconnection-stack-assume-role-mm/DeploymentRoleArn",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.34.2"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "githubconnection-stack-assume-role-mm/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "githubconnection-stack-assume-role-mm/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.34.2"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "githubconnection-stack-assume-role-mm/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnCondition",
+                  "version": "2.34.2"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.45"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.34.2"
+        }
+      },
       "networking-stack-mm": {
         "id": "networking-stack-mm",
         "path": "networking-stack-mm",

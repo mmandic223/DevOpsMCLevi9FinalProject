@@ -7,6 +7,95 @@
         "file": "tree.json"
       }
     },
+    "githubconnection-stack-assume-role-mm.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "githubconnection-stack-assume-role-mm.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "githubconnection-stack-assume-role-mm": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "githubconnection-stack-assume-role-mm.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/7371a6e5d449f3f63b434a58e1310da8df5af268ff486c1739ed201338791c22.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "githubconnection-stack-assume-role-mm.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "githubconnection-stack-assume-role-mm.assets"
+      ],
+      "metadata": {
+        "/githubconnection-stack-assume-role-mm/ghprovider/Resource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ghprovider968B9A8A"
+          }
+        ],
+        "/githubconnection-stack-assume-role-mm/Custom::AWSCDKOpenIdConnectProviderCustomResourceProvider/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomAWSCDKOpenIdConnectProviderCustomResourceProviderRole517FED65"
+          }
+        ],
+        "/githubconnection-stack-assume-role-mm/Custom::AWSCDKOpenIdConnectProviderCustomResourceProvider/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomAWSCDKOpenIdConnectProviderCustomResourceProviderHandlerF2C543E0"
+          }
+        ],
+        "/githubconnection-stack-assume-role-mm/deployment_role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "deploymentrole5FB771D0"
+          }
+        ],
+        "/githubconnection-stack-assume-role-mm/DeploymentRoleArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeploymentRoleArn"
+          }
+        ],
+        "/githubconnection-stack-assume-role-mm/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/githubconnection-stack-assume-role-mm/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/githubconnection-stack-assume-role-mm/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/githubconnection-stack-assume-role-mm/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "githubconnection-stack-assume-role-mm"
+    },
     "networking-stack-mm.assets": {
       "type": "cdk:asset-manifest",
       "properties": {
@@ -548,16 +637,16 @@
             "type": "aws:cdk:error",
             "data": "SSM parameter not available in account 802288441694, region eu-west-1: /VpcProvider/markomandic/vpcid",
             "trace": [
-              "Annotations.addMessage (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1213)",
-              "Annotations.addError (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/core/lib/annotations.js:1:765)",
-              "Function.getValue (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/core/lib/context-provider.js:2:1160)",
-              "Function.valueFromLookup (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/aws-ssm/lib/parameter.js:1:5162)",
-              "/tmp/tmpu754zyv4/lib/program.js:8058:85",
-              "Kernel._ensureSync (/tmp/tmpu754zyv4/lib/program.js:8604:28)",
-              "Kernel.sinvoke (/tmp/tmpu754zyv4/lib/program.js:8058:34)",
-              "KernelHost.processRequest (/tmp/tmpu754zyv4/lib/program.js:9596:36)",
-              "KernelHost.run (/tmp/tmpu754zyv4/lib/program.js:9559:22)",
-              "Immediate._onImmediate (/tmp/tmpu754zyv4/lib/program.js:9560:46)",
+              "Annotations.addMessage (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1213)",
+              "Annotations.addError (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/core/lib/annotations.js:1:765)",
+              "Function.getValue (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/core/lib/context-provider.js:2:1160)",
+              "Function.valueFromLookup (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/aws-ssm/lib/parameter.js:1:5162)",
+              "/tmp/tmp5n2ay7nt/lib/program.js:8058:85",
+              "Kernel._ensureSync (/tmp/tmp5n2ay7nt/lib/program.js:8604:28)",
+              "Kernel.sinvoke (/tmp/tmp5n2ay7nt/lib/program.js:8058:34)",
+              "KernelHost.processRequest (/tmp/tmp5n2ay7nt/lib/program.js:9596:36)",
+              "KernelHost.run (/tmp/tmp5n2ay7nt/lib/program.js:9559:22)",
+              "Immediate._onImmediate (/tmp/tmp5n2ay7nt/lib/program.js:9560:46)",
               "processImmediate (node:internal/timers:466:21)"
             ]
           },
@@ -565,16 +654,16 @@
             "type": "aws:cdk:error",
             "data": "Could not find any VPCs matching {\"account\":\"802288441694\",\"region\":\"eu-west-1\",\"filter\":{\"vpc-id\":\"dummy-value-for-/VpcProvider/markomandic/vpcid\"},\"returnAsymmetricSubnets\":true,\"lookupRoleArn\":\"arn:aws:iam::802288441694:role/cdk-hnb659fds-lookup-role-802288441694-eu-west-1\"}",
             "trace": [
-              "Annotations.addMessage (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1213)",
-              "Annotations.addError (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/core/lib/annotations.js:1:765)",
-              "Function.getValue (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/core/lib/context-provider.js:2:1160)",
-              "Function.fromLookup (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/aws-ec2/lib/vpc.js:1:12380)",
-              "/tmp/tmpu754zyv4/lib/program.js:8058:85",
-              "Kernel._ensureSync (/tmp/tmpu754zyv4/lib/program.js:8604:28)",
-              "Kernel.sinvoke (/tmp/tmpu754zyv4/lib/program.js:8058:34)",
-              "KernelHost.processRequest (/tmp/tmpu754zyv4/lib/program.js:9596:36)",
-              "KernelHost.run (/tmp/tmpu754zyv4/lib/program.js:9559:22)",
-              "Immediate._onImmediate (/tmp/tmpu754zyv4/lib/program.js:9560:46)",
+              "Annotations.addMessage (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1213)",
+              "Annotations.addError (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/core/lib/annotations.js:1:765)",
+              "Function.getValue (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/core/lib/context-provider.js:2:1160)",
+              "Function.fromLookup (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/aws-ec2/lib/vpc.js:1:12380)",
+              "/tmp/tmp5n2ay7nt/lib/program.js:8058:85",
+              "Kernel._ensureSync (/tmp/tmp5n2ay7nt/lib/program.js:8604:28)",
+              "Kernel.sinvoke (/tmp/tmp5n2ay7nt/lib/program.js:8058:34)",
+              "KernelHost.processRequest (/tmp/tmp5n2ay7nt/lib/program.js:9596:36)",
+              "KernelHost.run (/tmp/tmp5n2ay7nt/lib/program.js:9559:22)",
+              "Immediate._onImmediate (/tmp/tmp5n2ay7nt/lib/program.js:9560:46)",
               "processImmediate (node:internal/timers:466:21)"
             ]
           },
@@ -582,16 +671,16 @@
             "type": "aws:cdk:error",
             "data": "Found zones: [] for dns:levi9masterclass.com, privateZone:undefined, vpcId:undefined, but wanted exactly 1 zone",
             "trace": [
-              "Annotations.addMessage (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1213)",
-              "Annotations.addError (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/core/lib/annotations.js:1:765)",
-              "Function.getValue (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/core/lib/context-provider.js:2:1160)",
-              "Function.fromLookup (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/aws-route53/lib/hosted-zone.js:1:2800)",
-              "/tmp/tmpu754zyv4/lib/program.js:8058:85",
-              "Kernel._ensureSync (/tmp/tmpu754zyv4/lib/program.js:8604:28)",
-              "Kernel.sinvoke (/tmp/tmpu754zyv4/lib/program.js:8058:34)",
-              "KernelHost.processRequest (/tmp/tmpu754zyv4/lib/program.js:9596:36)",
-              "KernelHost.run (/tmp/tmpu754zyv4/lib/program.js:9559:22)",
-              "Immediate._onImmediate (/tmp/tmpu754zyv4/lib/program.js:9560:46)",
+              "Annotations.addMessage (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1213)",
+              "Annotations.addError (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/core/lib/annotations.js:1:765)",
+              "Function.getValue (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/core/lib/context-provider.js:2:1160)",
+              "Function.fromLookup (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/aws-route53/lib/hosted-zone.js:1:2800)",
+              "/tmp/tmp5n2ay7nt/lib/program.js:8058:85",
+              "Kernel._ensureSync (/tmp/tmp5n2ay7nt/lib/program.js:8604:28)",
+              "Kernel.sinvoke (/tmp/tmp5n2ay7nt/lib/program.js:8058:34)",
+              "KernelHost.processRequest (/tmp/tmp5n2ay7nt/lib/program.js:9596:36)",
+              "KernelHost.run (/tmp/tmp5n2ay7nt/lib/program.js:9559:22)",
+              "Immediate._onImmediate (/tmp/tmp5n2ay7nt/lib/program.js:9560:46)",
               "processImmediate (node:internal/timers:466:21)"
             ]
           }
@@ -679,28 +768,28 @@
             "type": "aws:cdk:warning",
             "data": "When creating an empty TargetGroup, you should specify a 'targetType' (this warning may become an error in the future).",
             "trace": [
-              "Annotations.addMessage (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1213)",
-              "Annotations.addWarning (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/core/lib/annotations.js:1:600)",
-              "ApplicationTargetGroup.validateTargetGroup (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/aws-elasticloadbalancingv2/lib/shared/base-target-group.js:1:4229)",
-              "ApplicationTargetGroup.validateTargetGroup (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/aws-elasticloadbalancingv2/lib/alb/application-target-group.js:1:9055)",
-              "Object.validate (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/aws-elasticloadbalancingv2/lib/shared/base-target-group.js:1:2938)",
-              "Node.validate (/tmp/jsii-kernel-YXgRxk/node_modules/constructs/lib/construct.js:305:30)",
-              "/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/core/lib/private/synthesis.js:1:2940",
-              "visit (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/core/lib/private/synthesis.js:3:64)",
-              "visit (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/core/lib/private/synthesis.js:3:141)",
-              "visit (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/core/lib/private/synthesis.js:3:141)",
-              "visit (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/core/lib/private/synthesis.js:3:141)",
-              "visit (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/core/lib/private/synthesis.js:3:141)",
-              "visit (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/core/lib/private/synthesis.js:3:141)",
-              "validateTree (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/core/lib/private/synthesis.js:1:2875)",
-              "Object.synthesize (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/core/lib/private/synthesis.js:1:598)",
-              "App.synth (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/core/lib/stage.js:1:1866)",
-              "/tmp/tmpu754zyv4/lib/program.js:8037:105",
-              "Kernel._ensureSync (/tmp/tmpu754zyv4/lib/program.js:8604:28)",
-              "Kernel.invoke (/tmp/tmpu754zyv4/lib/program.js:8037:34)",
-              "KernelHost.processRequest (/tmp/tmpu754zyv4/lib/program.js:9596:36)",
-              "KernelHost.run (/tmp/tmpu754zyv4/lib/program.js:9559:22)",
-              "Immediate._onImmediate (/tmp/tmpu754zyv4/lib/program.js:9560:46)",
+              "Annotations.addMessage (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1213)",
+              "Annotations.addWarning (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/core/lib/annotations.js:1:600)",
+              "ApplicationTargetGroup.validateTargetGroup (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/aws-elasticloadbalancingv2/lib/shared/base-target-group.js:1:4229)",
+              "ApplicationTargetGroup.validateTargetGroup (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/aws-elasticloadbalancingv2/lib/alb/application-target-group.js:1:9055)",
+              "Object.validate (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/aws-elasticloadbalancingv2/lib/shared/base-target-group.js:1:2938)",
+              "Node.validate (/tmp/jsii-kernel-Hha5i0/node_modules/constructs/lib/construct.js:305:30)",
+              "/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/core/lib/private/synthesis.js:1:2940",
+              "visit (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/core/lib/private/synthesis.js:3:64)",
+              "visit (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/core/lib/private/synthesis.js:3:141)",
+              "visit (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/core/lib/private/synthesis.js:3:141)",
+              "visit (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/core/lib/private/synthesis.js:3:141)",
+              "visit (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/core/lib/private/synthesis.js:3:141)",
+              "visit (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/core/lib/private/synthesis.js:3:141)",
+              "validateTree (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/core/lib/private/synthesis.js:1:2875)",
+              "Object.synthesize (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/core/lib/private/synthesis.js:1:598)",
+              "App.synth (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/core/lib/stage.js:1:1866)",
+              "/tmp/tmp5n2ay7nt/lib/program.js:8037:105",
+              "Kernel._ensureSync (/tmp/tmp5n2ay7nt/lib/program.js:8604:28)",
+              "Kernel.invoke (/tmp/tmp5n2ay7nt/lib/program.js:8037:34)",
+              "KernelHost.processRequest (/tmp/tmp5n2ay7nt/lib/program.js:9596:36)",
+              "KernelHost.run (/tmp/tmp5n2ay7nt/lib/program.js:9559:22)",
+              "Immediate._onImmediate (/tmp/tmp5n2ay7nt/lib/program.js:9560:46)",
               "processImmediate (node:internal/timers:466:21)"
             ]
           }
@@ -758,17 +847,17 @@
             "type": "aws:cdk:warning",
             "data": "Proper policies need to be attached before pulling from ECR repository, or use 'fromEcrRepository'.",
             "trace": [
-              "Annotations.addMessage (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1213)",
-              "Annotations.addWarning (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/core/lib/annotations.js:1:600)",
-              "RepositoryImage.bind (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/aws-ecs/lib/images/repository.js:1:1129)",
-              "new ContainerDefinition (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/aws-ecs/lib/container-definition.js:1:2824)",
-              "FargateTaskDefinition.addContainer (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/aws-ecs/lib/base/task-definition.js:1:8925)",
-              "new ApplicationLoadBalancedFargateService (/tmp/jsii-kernel-YXgRxk/node_modules/aws-cdk-lib/aws-ecs-patterns/lib/fargate/application-load-balanced-fargate-service.js:1:1700)",
-              "Kernel._create (/tmp/tmpu754zyv4/lib/program.js:8223:29)",
-              "Kernel.create (/tmp/tmpu754zyv4/lib/program.js:7961:29)",
-              "KernelHost.processRequest (/tmp/tmpu754zyv4/lib/program.js:9596:36)",
-              "KernelHost.run (/tmp/tmpu754zyv4/lib/program.js:9559:22)",
-              "Immediate._onImmediate (/tmp/tmpu754zyv4/lib/program.js:9560:46)",
+              "Annotations.addMessage (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1213)",
+              "Annotations.addWarning (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/core/lib/annotations.js:1:600)",
+              "RepositoryImage.bind (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/aws-ecs/lib/images/repository.js:1:1129)",
+              "new ContainerDefinition (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/aws-ecs/lib/container-definition.js:1:2824)",
+              "FargateTaskDefinition.addContainer (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/aws-ecs/lib/base/task-definition.js:1:8925)",
+              "new ApplicationLoadBalancedFargateService (/tmp/jsii-kernel-Hha5i0/node_modules/aws-cdk-lib/aws-ecs-patterns/lib/fargate/application-load-balanced-fargate-service.js:1:1700)",
+              "Kernel._create (/tmp/tmp5n2ay7nt/lib/program.js:8223:29)",
+              "Kernel.create (/tmp/tmp5n2ay7nt/lib/program.js:7961:29)",
+              "KernelHost.processRequest (/tmp/tmp5n2ay7nt/lib/program.js:9596:36)",
+              "KernelHost.run (/tmp/tmp5n2ay7nt/lib/program.js:9559:22)",
+              "Immediate._onImmediate (/tmp/tmp5n2ay7nt/lib/program.js:9560:46)",
               "processImmediate (node:internal/timers:466:21)"
             ]
           }
