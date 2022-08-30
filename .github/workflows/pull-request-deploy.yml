@@ -117,7 +117,7 @@ jobs:
           sed -i '/TAG/c\TAG='"${TAG}"'' .env
           cat .env
 
-       - name: Assume role using OIDC
+      - name: Assume role using OIDC
         uses: aws-actions/configure-aws-credentials@master
         with:
           role-to-assume: arn:aws:iam::802288441694:role/mmandic223-DevOpsMCLevi9FinalProject-deploy
