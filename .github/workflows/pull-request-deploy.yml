@@ -111,7 +111,7 @@ jobs:
         id: cdk_deploy
         run: |
           echo Preparing environment variables
-          TAG=$(echo ${{ github.event.number }} 
+          TAG=$echo ${{ github.event.number }}
           echo $TAG
           cat .env
           sed -i '/TAG/c\TAG='"${TAG}"'' .env
