@@ -1,0 +1,60 @@
+# name: "Pull Request clean-up"
+
+# on:
+#   pull_request:
+#     branches:
+#       - dev
+#     types: [unlabeled, closed]
+# permissions:
+#   id-token: write # required to use OIDC authentication
+#   contents: read # required to checkout the code from the repo
+
+# jobs:
+#   clean-up:
+#     if: |
+#       (github.event.action == 'unlabeled' && github.event.label.name == 'deploy') ||
+#       (github.event.action == 'closed' && contains(github.event.pull_request.labels.*.name, 'deploy'))
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: inject slug/short variables
+#         uses: rlespinasse/github-slug-action@v3.x
+
+#       - name: set STAGE variable in environment for next steps
+#         run: echo "STAGE=pr-${{ github.event.number }}-${{ env.GITHUB_HEAD_REF_SLUG }}" >> $GITHUB_ENV
+
+#       - name: checkout the files
+#         uses: actions/checkout@v2
+
+#       # there is a bug with the actions/cache used in bahmutov/npm-install@v1 on "closed" event
+#       # more infos here : https://github.com/actions/cache/issues/478
+#       # - name: install requirements
+#       #   uses: actions/checkout@v3
+#       #   uses: actions/setup-python@v4
+#       #   with:
+#       #     python-version: '3.8'
+#       #     cache: 'pip' # caching pip dependencies
+#       #   run: pip install -r requirements.txt
+
+      
+
+#       - name: install npm
+#         run: 'sudo apt update -y && sudo apt install nodejs npm -y'
+
+#       - name: install aws-cdk
+#         run: 'sudo npm install -g aws-cdk'
+
+#       - name: install requirements
+#         run: 'pip3 install -r requirements.txt'
+
+#       - name: cdk deploy test
+#         uses: tj-actions/aws-cdk@v3
+#         with:
+#           cdk_subcommand: "destroy"
+#           cdk_stack: "networking-stack-mm"
+#           cdk_extra_args: "--require-approval never"
+
+#       - name: delete the github deployments and the corresponding environment
+#         uses: strumwolf/delete-deployment-environment@v1.1.0
+#         with:
+#           token: ${{ secrets.GITHUB_TOKEN }}
+#           environment: ${{ env.STAGE }}
