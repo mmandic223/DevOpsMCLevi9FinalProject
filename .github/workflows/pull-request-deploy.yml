@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   deploy:
-    # permissions: write-all
+    permissions: write-all
     if: |
       (github.event.action == 'labeled' && github.event.label.name == 'deploy') ||
       (github.event.action != 'labeled' && contains(github.event.pull_request.labels.*.name, 'deploy'))
