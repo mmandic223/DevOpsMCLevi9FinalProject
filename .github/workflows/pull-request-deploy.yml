@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   deploy:
-    permissions: write-all
+    # permissions: write-all
     if: |
       (github.event.action == 'labeled' && github.event.label.name == 'deploy') ||
       (github.event.action != 'labeled' && contains(github.event.pull_request.labels.*.name, 'deploy'))
@@ -53,14 +53,14 @@ jobs:
       #     role-to-assume: arn:aws:iam::802288441694:role/mm-github-actions-role-test
       #     aws-region: us-west-1 # use your region here.
 
-      - name: install npm
-        run: 'sudo apt update -y && sudo apt install nodejs npm -y'
+      # - name: install npm
+      #   run: 'sudo apt update -y && sudo apt install nodejs npm -y'
 
-      - name: install aws-cdk
-        run: 'sudo npm install -g aws-cdk'
+      # - name: install aws-cdk
+      #   run: 'sudo npm install -g aws-cdk'
 
-      - name: install requirements
-        run: 'pip3 install -r requirements.txt'
+      # - name: install requirements
+      #   run: 'pip3 install -r requirements.txt'
 
       # - name: deploy the stack on AWS
       #   id: cdk_deploy
@@ -111,22 +111,25 @@ jobs:
         id: cdk_deploy
         run: |
           echo Preparing environment variables
-          TAG=$(echo ${{ github.event.number }} | cut -c 1-7) 
+          TAG=$(echo ${{ github.event.number }} 
           echo $TAG
           cat .env
           sed -i '/TAG/c\TAG='"${TAG}"'' .env
           cat .env
 
-      - name: cdk deploy test
-        uses: tj-actions/aws-cdk@v3
+       - name: Assume role using OIDC
+        uses: aws-actions/configure-aws-credentials@master
         with:
-          cdk_subcommand: "diff"
-          cdk_stack: "networking-stack-mm"
-          # cdk_extra_args: "--require-approval never"
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: "eu-west-1"
+          role-to-assume: arn:aws:iam::802288441694:role/mmandic223-DevOpsMCLevi9FinalProject-deploy
+          aws-region: eu-west-1
+
+      - name: cdk deploy
+        uses: youyo/aws-cdk-github-actions@v2
+        with:
+          working_dir: './aws_final_project'
+          cdk_subcommand: 'diff'
+          # cdk_args: '--require-approval never'
+          cdk_stack: 'networking-stack-mm'
 
       
       # - name: cdk diff2
