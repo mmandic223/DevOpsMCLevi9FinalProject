@@ -56,6 +56,11 @@ class GithubConnection(Stack):
                             actions=['sts:AssumeRole'],
                             resources=[f'arn:aws:iam::802288441694:role/cdk-*'],
                             effect=iam.Effect.ALLOW
+                        ),
+                        iam.PolicyStatement(
+                            actions=['cloudformation:*'],
+                            resources=['*'],
+                            effect=iam.Effect.ALLOW
                         )
                     ]
                 )

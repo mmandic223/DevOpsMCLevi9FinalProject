@@ -126,6 +126,11 @@
          "Action": "sts:AssumeRole",
          "Effect": "Allow",
          "Resource": "arn:aws:iam::802288441694:role/cdk-*"
+        },
+        {
+         "Action": "cloudformation:*",
+         "Effect": "Allow",
+         "Resource": "*"
         }
        ],
        "Version": "2012-10-17"
