@@ -25,7 +25,7 @@ jobs:
         id: deployment
         uses: abendigo/create-deployment@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.AWS_GITHUB_TOKEN }}
           payload: ${{ env.STAGE }}
           ref: ${{ github.head_ref }}
 
@@ -223,7 +223,7 @@ jobs:
         if: always()
         with:
           step: finish
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.AWS_GITHUB_TOKEN }}
           status: ${{ job.status }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env_url: ${{ steps.cdk_deploy.outputs.env_url }}
