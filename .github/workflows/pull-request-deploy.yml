@@ -19,14 +19,13 @@ jobs:
         uses: rlespinasse/github-slug-action@v3.x
 
       - name: set STAGE variable in environment for next steps
-        run: |
-          echo "STAGE=pr-${{ github.event.number }}-${{ env.GITHUB_HEAD_REF_SLUG }}" >> $GITHUB_ENV
-          echo "AWS_GITHUB_TOKEN=$(echo ${{ secrets.AWS_GITHUB_TOKEN }}) >> $GITHUB_ENV
+        run: echo "STAGE=pr-${{ github.event.number }}-${{ env.GITHUB_HEAD_REF_SLUG }}" >> $GITHUB_ENV
+
       - name: deployment
         id: deployment
         uses: abendigo/create-deployment@v1
         with:
-          token: ${{ env.AWS_GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           payload: ${{ env.STAGE }}
           ref: ${{ github.head_ref }}
 
@@ -225,7 +224,7 @@ jobs:
         if: always()
         with:
           step: finish
-          token: ${{ env.AWS_GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ job.status }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env_url: ${{ steps.cdk_deploy.outputs.env_url }}
