@@ -125,7 +125,7 @@
         {
          "Action": "sts:AssumeRole",
          "Effect": "Allow",
-         "Resource": "arn:aws:iam::982195495700:role/cdk-*"
+         "Resource": "arn:aws:iam::802288441694:role/cdk-*"
         }
        ],
        "Version": "2012-10-17"

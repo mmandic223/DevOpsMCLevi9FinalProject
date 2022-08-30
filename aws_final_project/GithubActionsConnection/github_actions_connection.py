@@ -46,12 +46,15 @@ class GithubConnection(Stack):
                     statements=[
                         iam.PolicyStatement(
                             actions=['sts:AssumeRole'],
-                            resources=[f'arn:aws:iam::982195495700:role/cdk-*'],
+                            resources=[f'arn:aws:iam::802288441694:role/cdk-*'],
                             effect=iam.Effect.ALLOW
                         )
                     ]
                 )
-            }
+            },
+            
+
+
         )
 
         CfnOutput(self, "DeploymentRoleArn", value=f"arn:aws:iam::982195495700:role/{github_org}-{github_repo}-deploy")
