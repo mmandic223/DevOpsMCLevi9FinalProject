@@ -131,6 +131,7 @@
          "Action": [
           "cloudformation:*",
           "ec2:*",
+          "ecr:*",
           "sts:*"
          ],
          "Effect": "Allow",
