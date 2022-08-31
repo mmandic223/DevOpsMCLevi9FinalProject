@@ -1,0 +1,57 @@
+name: "Pull Request clean-up"
+
+on:
+  pull_request:
+    types: [unlabeled, closed]
+
+jobs:
+  clean-up:
+    if: |
+      (github.event.action == 'unlabeled' && github.event.label.name == ':rocket: deploy') ||
+      (github.event.action == 'closed' && contains(github.event.pull_request.labels.*.name, ':rocket: deploy'))
+    runs-on: ubuntu-latest
+    steps:
+      - name: inject slug/short variables
+        uses: rlespinasse/github-slug-action@v3.x
+
+      - name: set STAGE variable in environment for next steps
+        run: echo "STAGE=pr-${{ github.event.number }}-${{ env.GITHUB_HEAD_REF_SLUG }}" >> $GITHUB_ENV
+
+      - name: checkout the files
+        uses: actions/checkout@v2
+
+      - name: Assume role using OIDC
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          role-to-assume: arn:aws:iam::802288441694:role/mmandic223-DevOpsMCLevi9FinalProject-deploy
+          aws-region: eu-west-1
+
+      - name: cdk delete
+        uses: youyo/aws-cdk-github-actions@v2
+        with:
+          cdk_subcommand: 'delete'
+          actions_comment: false
+          # cdk_args: '--require-approval never'
+          cdk_stack: 'networking-stack-mm'
+      
+      - name: cdk delete
+        uses: youyo/aws-cdk-github-actions@v2
+        with:
+          cdk_subcommand: 'delete'
+          actions_comment: false
+          # cdk_args: '--require-approval never'
+          cdk_stack: 'lambda-api-dynamo-stack-mm'
+
+      - name: cdk delete
+        uses: youyo/aws-cdk-github-actions@v2
+        with:
+          cdk_subcommand: 'delete'
+          actions_comment: false
+          # cdk_args: '--require-approval never'
+          cdk_stack: 'ecs-cluster-stack-mm'
+
+      - name: delete the github deployments and the corresponding environment
+        uses: strumwolf/delete-deployment-environment@v1.1.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          environment: ${{ env.STAGE }}
