@@ -246,7 +246,7 @@ jobs:
         run: docker build -t markomandic/openapiui ./aws_final_project/EcsCluster/
 
       - name: tag image
-        run: docker tag markomandic/openapiui docker tag markomandicecrrepo:latest 802288441694.dkr.ecr.eu-west-1.amazonaws.com/markomandicecrrepo:${{ env.TAG }}
+        run: docker tag markomandic/openapiui 802288441694.dkr.ecr.eu-west-1.amazonaws.com/markomandicecrrepo:${{ env.TAG }}
 
       - name: push image
         run: docker push 802288441694.dkr.ecr.eu-west-1.amazonaws.com/markomandicecrrepo:${{ env.TAG }}
