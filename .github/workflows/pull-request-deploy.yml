@@ -244,17 +244,17 @@ jobs:
         run: cat ./aws_final_project/EcsCluster/swagger.json | jq '(.paths."/masterclass"[].parameters[] | select(.default)).default |= "'${{ env.APIID }}'"' ./aws_final_project/EcsCluster/swagger.json > parsing.txt && cp parsing.txt ./aws_final_project/EcsCluster/swagger.json
 
 
-      - name: login to ecr
-        run: aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 802288441694.dkr.ecr.eu-west-1.amazonaws.com
+      # - name: login to ecr
+      #   run: aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 802288441694.dkr.ecr.eu-west-1.amazonaws.com
 
-      - name: build image
-        run: docker build -t markomandic/openapiui ./aws_final_project/EcsCluster/
+      # - name: build image
+      #   run: docker build -t markomandic/openapiui ./aws_final_project/EcsCluster/
 
-      - name: tag image
-        run: docker tag markomandic/openapiui 802288441694.dkr.ecr.eu-west-1.amazonaws.com/markomandicecrrepo:${{ env.TAG }}
+      # - name: tag image
+      #   run: docker tag markomandic/openapiui 802288441694.dkr.ecr.eu-west-1.amazonaws.com/markomandicecrrepo:${{ env.TAG }}
 
-      - name: push image
-        run: docker push 802288441694.dkr.ecr.eu-west-1.amazonaws.com/markomandicecrrepo:${{ env.TAG }}
+      # - name: push image
+      #   run: docker push 802288441694.dkr.ecr.eu-west-1.amazonaws.com/markomandicecrrepo:${{ env.TAG }}
       # # - name: S3 Sync
       # #   uses: ItsKarma/aws-cli@v1.70.0
       # #   with:
@@ -264,16 +264,16 @@ jobs:
       # #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       # #     AWS_DEFAULT_REGION: "eu-west-1"
 ################################################
-      # - name: Build Push ECR  
-      #   uses: vitr/actions-build-and-upload-to-ecs@master
-      #   with:
-      #     access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     account_id: ${{ secrets.AWS_ACCOUNT_ID }}
-      #     dockerfile: aws_final_project/EcsCluster/Dockerfile
-      #     repo: markomandicrepo
-      #     region: eu-west-1
-      #     tags: $APIID
+      - name: Build Push ECR  
+        uses: vitr/actions-build-and-upload-to-ecs@master
+        with:
+          access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          account_id: ${{ secrets.AWS_ACCOUNT_ID }}
+          dockerfile: aws_final_project/EcsCluster/Dockerfile
+          repo: markomandicecrrepo
+          region: eu-west-1
+          tags: ${{ env.TAG }}
 ################################################
       # - name: cdk diff3
       #   uses: youyo/aws-cdk-github-actions@v1
