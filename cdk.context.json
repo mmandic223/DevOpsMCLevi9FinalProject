@@ -3,5 +3,61 @@
     "eu-west-1a",
     "eu-west-1b",
     "eu-west-1c"
-  ]
+  ],
+  "ssm:account=802288441694:parameterName=/VpcProvider/markomandic/vpcid:region=eu-west-1": "vpc-0610900d6583ccaeb",
+  "vpc-provider:account=802288441694:filter.vpc-id=vpc-0610900d6583ccaeb:region=eu-west-1:returnAsymmetricSubnets=true": {
+    "vpcId": "vpc-0610900d6583ccaeb",
+    "vpcCidrBlock": "10.0.0.0/20",
+    "availabilityZones": [],
+    "subnetGroups": [
+      {
+        "name": "MMPrivateSubnet",
+        "type": "Isolated",
+        "subnets": [
+          {
+            "subnetId": "subnet-0d36a55dffc8cb7b9",
+            "cidr": "10.0.3.0/24",
+            "availabilityZone": "eu-west-1a",
+            "routeTableId": "rtb-00e80b467ab1366ac"
+          },
+          {
+            "subnetId": "subnet-01e71fdc55f4309fb",
+            "cidr": "10.0.4.0/24",
+            "availabilityZone": "eu-west-1b",
+            "routeTableId": "rtb-0fda1f21dbc1e46fd"
+          },
+          {
+            "subnetId": "subnet-0ebef67b70d29fc47",
+            "cidr": "10.0.5.0/24",
+            "availabilityZone": "eu-west-1c",
+            "routeTableId": "rtb-023c593734980ab90"
+          }
+        ]
+      },
+      {
+        "name": "MMPublicSubnet",
+        "type": "Public",
+        "subnets": [
+          {
+            "subnetId": "subnet-0e34e1bbde710c678",
+            "cidr": "10.0.0.0/24",
+            "availabilityZone": "eu-west-1a",
+            "routeTableId": "rtb-0bff08ea59dff610f"
+          },
+          {
+            "subnetId": "subnet-0640a690dba7d39cd",
+            "cidr": "10.0.1.0/24",
+            "availabilityZone": "eu-west-1b",
+            "routeTableId": "rtb-064a8b7b72ca4f4e2"
+          },
+          {
+            "subnetId": "subnet-0fb1476694e096400",
+            "cidr": "10.0.2.0/24",
+            "availabilityZone": "eu-west-1c",
+            "routeTableId": "rtb-021100ee645bd6606"
+          }
+        ]
+      }
+    ]
+  }
 }
