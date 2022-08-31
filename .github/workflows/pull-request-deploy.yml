@@ -267,9 +267,6 @@ jobs:
       - name: Build Push ECR  
         uses: vitr/actions-build-and-upload-to-ecs@master
         with:
-          access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          account_id: ${{ secrets.AWS_ACCOUNT_ID }}
           dockerfile: aws_final_project/EcsCluster/Dockerfile
           repo: markomandicecrrepo
           region: eu-west-1
