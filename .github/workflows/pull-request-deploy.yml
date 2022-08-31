@@ -234,12 +234,13 @@ jobs:
 
       # - name: print apidi
       #   run: echo $APIID
-      # - name: update apidi in swagger.json
-      #   run: cat ./aws_final_project/EcsCluster/swagger.json | jq '(.paths."/masterclass"[].parameters[] | select(.default)).default |= "'$APIID'"' ./aws_final_project/EcsCluster/swagger.json > parsing.txt && cp parsing.txt ./aws_final_project/EcsCluster/swagger.json
+
+      - name: update apidi in swagger.json
+        run: cat ./aws_final_project/EcsCluster/swagger.json | jq '(.paths."/masterclass"[].parameters[] | select(.default)).default |= "'${{ env.APIID }}'"' ./aws_final_project/EcsCluster/swagger.json > parsing.txt && cp parsing.txt ./aws_final_project/EcsCluster/swagger.json
 
 
-      # - name: get apidi
-      #   run: cat ./aws_final_project/EcsCluster/swagger.json
+      - name: get apidi
+        run: cat ./aws_final_project/EcsCluster/swagger.json
       # # - name: S3 Sync
       # #   uses: ItsKarma/aws-cli@v1.70.0
       # #   with:
@@ -309,3 +310,9 @@ jobs:
           status: ${{ job.status }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env_url: ${{ steps.cdk_deploy.outputs.env_url }}
+
+      - name: delete the github deployments and the corresponding environment
+        uses: strumwolf/delete-deployment-environment@v1.1.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          environment: ${{ env.STAGE }}
