@@ -223,11 +223,17 @@ jobs:
       #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: get apidi
-        run: APIID=$(aws cloudformation --region eu-west-1 describe-stacks --stack-name lambda-api-dynamo-stack-mm --query 'Stacks[0].Outputs[?OutputKey==`apiid`].OutputValue' --output text)
+      - name: inject slug/short variables
+        uses: rlespinasse/github-slug-action@v3.x
 
-      - name: print apidi
-        run: echo $APIID
+      - name: set STAGE variable in environment for next steps
+        run: echo "APIID=$(aws cloudformation --region eu-west-1 describe-stacks --stack-name lambda-api-dynamo-stack-mm --query 'Stacks[0].Outputs[?OutputKey==`apiid`].OutputValue' --output text)" >> $GITHUB_ENV
+
+      # - name: get apidi
+      #   run: APIID=c
+
+      # - name: print apidi
+      #   run: echo $APIID
       # - name: update apidi in swagger.json
       #   run: cat ./aws_final_project/EcsCluster/swagger.json | jq '(.paths."/masterclass"[].parameters[] | select(.default)).default |= "'$APIID'"' ./aws_final_project/EcsCluster/swagger.json > parsing.txt && cp parsing.txt ./aws_final_project/EcsCluster/swagger.json
 
