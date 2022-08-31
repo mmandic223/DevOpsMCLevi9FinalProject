@@ -226,6 +226,9 @@ jobs:
       - name: get apidi
         run: APIID=$(aws cloudformation --region eu-west-1 describe-stacks --stack-name lambda-api-dynamo-stack-mm --query 'Stacks[0].Outputs[?OutputKey==`apiid`].OutputValue' --output text)
 
+
+      - name: echo apidi
+        run: echo $APIID
       # # - name: S3 Sync
       # #   uses: ItsKarma/aws-cli@v1.70.0
       # #   with:
@@ -244,7 +247,7 @@ jobs:
       #     dockerfile: aws_final_project/EcsCluster/Dockerfile
       #     repo: markomandicrepo
       #     region: eu-west-1
-      #     tags: ${{ env.APIID }}
+      #     tags: $APIID
 ################################################
       # - name: cdk diff3
       #   uses: youyo/aws-cdk-github-actions@v1
