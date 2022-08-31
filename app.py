@@ -18,7 +18,7 @@ env_EU = cdk.Environment(account="802288441694", region="eu-west-1")
 
 app = cdk.App()
 
-GithubConnection(app, "githubconnection-stack-assume-role-mm")
+GithubConnection(app, "ghactions-stack-assume-role-mm")
 networkingstack = NetworkingtStack(app, "networking-stack-mm", env=env_EU)
 LambdaApiDynamoStack(app, "lambda-api-dynamo-stack-mm", networkingstack.vpc_endpoint ,env=env_EU)
 PipelineStack(app, "pipeline-stack", env=env_EU)

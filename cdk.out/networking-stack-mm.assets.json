@@ -1,7 +1,7 @@
 {
   "version": "20.0.0",
   "files": {
-    "f7bf7773c715f83c86802345d45b452af8944194c3019ae019443a6923b0b5e2": {
+    "f223cbce0365f4f2f92651556c4c54f0d682578643fbe94d2c3d24d546ccb098": {
       "source": {
         "path": "networking-stack-mm.template.json",
         "packaging": "file"
@@ -9,7 +9,7 @@
       "destinations": {
         "802288441694-eu-west-1": {
           "bucketName": "cdk-hnb659fds-assets-802288441694-eu-west-1",
-          "objectKey": "f7bf7773c715f83c86802345d45b452af8944194c3019ae019443a6923b0b5e2.json",
+          "objectKey": "f223cbce0365f4f2f92651556c4c54f0d682578643fbe94d2c3d24d546ccb098.json",
           "region": "eu-west-1",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::802288441694:role/cdk-hnb659fds-file-publishing-role-802288441694-eu-west-1"
         }
