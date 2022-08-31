@@ -23,7 +23,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/053434caa031301480f34e9d6b1209ee9051072ea0f0c429bb8df990d685e574.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c8d021ca81a516a05c80f1505df456b4efd4f5c90b00a6709f28f554bbb05e28.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -616,7 +616,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::802288441694:role/cdk-hnb659fds-deploy-role-802288441694-eu-west-1",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::802288441694:role/cdk-hnb659fds-cfn-exec-role-802288441694-eu-west-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-802288441694-eu-west-1/9878e102a365b304ce4accb73211fed2a116c5f3f2282278efd9df78ba2fcea5.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-802288441694-eu-west-1/f03622da04afa30b7c2f6377df76947b5ef8a1245a943fe15c06c1896e97e483.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -637,16 +637,16 @@
             "type": "aws:cdk:error",
             "data": "Found zones: [] for dns:levi9masterclass.com, privateZone:undefined, vpcId:undefined, but wanted exactly 1 zone",
             "trace": [
-              "Annotations.addMessage (/tmp/jsii-kernel-iGO0dM/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1213)",
-              "Annotations.addError (/tmp/jsii-kernel-iGO0dM/node_modules/aws-cdk-lib/core/lib/annotations.js:1:765)",
-              "Function.getValue (/tmp/jsii-kernel-iGO0dM/node_modules/aws-cdk-lib/core/lib/context-provider.js:2:1160)",
-              "Function.fromLookup (/tmp/jsii-kernel-iGO0dM/node_modules/aws-cdk-lib/aws-route53/lib/hosted-zone.js:1:2800)",
-              "/tmp/tmpx7zagexl/lib/program.js:8058:85",
-              "Kernel._ensureSync (/tmp/tmpx7zagexl/lib/program.js:8604:28)",
-              "Kernel.sinvoke (/tmp/tmpx7zagexl/lib/program.js:8058:34)",
-              "KernelHost.processRequest (/tmp/tmpx7zagexl/lib/program.js:9596:36)",
-              "KernelHost.run (/tmp/tmpx7zagexl/lib/program.js:9559:22)",
-              "Immediate._onImmediate (/tmp/tmpx7zagexl/lib/program.js:9560:46)",
+              "Annotations.addMessage (/tmp/jsii-kernel-6aunPT/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1213)",
+              "Annotations.addError (/tmp/jsii-kernel-6aunPT/node_modules/aws-cdk-lib/core/lib/annotations.js:1:765)",
+              "Function.getValue (/tmp/jsii-kernel-6aunPT/node_modules/aws-cdk-lib/core/lib/context-provider.js:2:1160)",
+              "Function.fromLookup (/tmp/jsii-kernel-6aunPT/node_modules/aws-cdk-lib/aws-route53/lib/hosted-zone.js:1:2800)",
+              "/tmp/tmpdm1cbofd/lib/program.js:8058:85",
+              "Kernel._ensureSync (/tmp/tmpdm1cbofd/lib/program.js:8604:28)",
+              "Kernel.sinvoke (/tmp/tmpdm1cbofd/lib/program.js:8058:34)",
+              "KernelHost.processRequest (/tmp/tmpdm1cbofd/lib/program.js:9596:36)",
+              "KernelHost.run (/tmp/tmpdm1cbofd/lib/program.js:9559:22)",
+              "Immediate._onImmediate (/tmp/tmpdm1cbofd/lib/program.js:9560:46)",
               "processImmediate (node:internal/timers:466:21)"
             ]
           }
@@ -782,17 +782,17 @@
             "type": "aws:cdk:warning",
             "data": "Proper policies need to be attached before pulling from ECR repository, or use 'fromEcrRepository'.",
             "trace": [
-              "Annotations.addMessage (/tmp/jsii-kernel-iGO0dM/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1213)",
-              "Annotations.addWarning (/tmp/jsii-kernel-iGO0dM/node_modules/aws-cdk-lib/core/lib/annotations.js:1:600)",
-              "RepositoryImage.bind (/tmp/jsii-kernel-iGO0dM/node_modules/aws-cdk-lib/aws-ecs/lib/images/repository.js:1:1129)",
-              "new ContainerDefinition (/tmp/jsii-kernel-iGO0dM/node_modules/aws-cdk-lib/aws-ecs/lib/container-definition.js:1:2824)",
-              "FargateTaskDefinition.addContainer (/tmp/jsii-kernel-iGO0dM/node_modules/aws-cdk-lib/aws-ecs/lib/base/task-definition.js:1:8925)",
-              "new ApplicationLoadBalancedFargateService (/tmp/jsii-kernel-iGO0dM/node_modules/aws-cdk-lib/aws-ecs-patterns/lib/fargate/application-load-balanced-fargate-service.js:1:1700)",
-              "Kernel._create (/tmp/tmpx7zagexl/lib/program.js:8223:29)",
-              "Kernel.create (/tmp/tmpx7zagexl/lib/program.js:7961:29)",
-              "KernelHost.processRequest (/tmp/tmpx7zagexl/lib/program.js:9596:36)",
-              "KernelHost.run (/tmp/tmpx7zagexl/lib/program.js:9559:22)",
-              "Immediate._onImmediate (/tmp/tmpx7zagexl/lib/program.js:9560:46)",
+              "Annotations.addMessage (/tmp/jsii-kernel-6aunPT/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1213)",
+              "Annotations.addWarning (/tmp/jsii-kernel-6aunPT/node_modules/aws-cdk-lib/core/lib/annotations.js:1:600)",
+              "RepositoryImage.bind (/tmp/jsii-kernel-6aunPT/node_modules/aws-cdk-lib/aws-ecs/lib/images/repository.js:1:1129)",
+              "new ContainerDefinition (/tmp/jsii-kernel-6aunPT/node_modules/aws-cdk-lib/aws-ecs/lib/container-definition.js:1:2824)",
+              "FargateTaskDefinition.addContainer (/tmp/jsii-kernel-6aunPT/node_modules/aws-cdk-lib/aws-ecs/lib/base/task-definition.js:1:8925)",
+              "new ApplicationLoadBalancedFargateService (/tmp/jsii-kernel-6aunPT/node_modules/aws-cdk-lib/aws-ecs-patterns/lib/fargate/application-load-balanced-fargate-service.js:1:1700)",
+              "Kernel._create (/tmp/tmpdm1cbofd/lib/program.js:8223:29)",
+              "Kernel.create (/tmp/tmpdm1cbofd/lib/program.js:7961:29)",
+              "KernelHost.processRequest (/tmp/tmpdm1cbofd/lib/program.js:9596:36)",
+              "KernelHost.run (/tmp/tmpdm1cbofd/lib/program.js:9559:22)",
+              "Immediate._onImmediate (/tmp/tmpdm1cbofd/lib/program.js:9560:46)",
               "processImmediate (node:internal/timers:466:21)"
             ]
           }
