@@ -224,7 +224,7 @@ jobs:
       #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: get apidi
-        run: "aws cloudformation --region eu-west-1 describe-stacks --stack-name lambda-api-dynamo-stack-mm --query 'Stacks[0].Outputs[?OutputKey==`apiid`].OutputValue' --output text >> $GITHUB_ENV"
+        run: APIID=$(aws cloudformation --region eu-west-1 describe-stacks --stack-name lambda-api-dynamo-stack-mm --query 'Stacks[0].Outputs[?OutputKey==`apiid`].OutputValue' --output text)
 
       # # - name: S3 Sync
       # #   uses: ItsKarma/aws-cli@v1.70.0
