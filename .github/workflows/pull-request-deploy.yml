@@ -110,53 +110,61 @@ jobs:
       #     cdk diff ecs-cluster-stack-mm
       #     cdk synth ecs-cluster-stack-mm
       #     cdk deploy --require-approval never --verbose ecs-cluster-stack-mm
-      - name: prepare stack on AWS
-        id: cdk_deploy
-        run: |
-          echo Preparing environment variables
-          TAG=$(echo ${{ github.event.number }} | cut -c 1-7) 
-          echo $TAG
-          cat .env
-          sed -i '/TAG/c\TAG='"${TAG}"'' .env
-          cat .env
+      
+      
+      
+      
+      # - name: prepare stack on AWS
+      #   id: cdk_deploy
+      #   run: |
+      #     echo Preparing environment variables
+      #     TAG=$(echo ${{ github.event.number }} | cut -c 1-7) 
+      #     echo $TAG
+      #     cat .env
+      #     sed -i '/TAG/c\TAG='"${TAG}"'' .env
+      #     cat .env
 
-      - name: Assume role using OIDC
-        uses: aws-actions/configure-aws-credentials@master
-        with:
-          role-to-assume: arn:aws:iam::802288441694:role/mmandic223-DevOpsMCLevi9FinalProject-deploy
-          aws-region: eu-west-1
+      # - name: Assume role using OIDC
+      #   uses: aws-actions/configure-aws-credentials@master
+      #   with:
+      #     role-to-assume: arn:aws:iam::802288441694:role/mmandic223-DevOpsMCLevi9FinalProject-deploy
+      #     aws-region: eu-west-1
 
-      - name: cdk diff
-        uses: youyo/aws-cdk-github-actions@v2
-        with:
-          cdk_subcommand: 'diff'
-          actions_comment: false
-          # cdk_args: '--require-approval never'
-          cdk_stack: 'networking-stack-mm'
+      # - name: cdk diff
+      #   uses: youyo/aws-cdk-github-actions@v2
+      #   with:
+      #     cdk_subcommand: 'diff'
+      #     actions_comment: false
+      #     # cdk_args: '--require-approval never'
+      #     cdk_stack: 'networking-stack-mm'
 
-      - name: cdk diff
-        uses: youyo/aws-cdk-github-actions@v2
-        with:
-          cdk_subcommand: 'diff'
-          actions_comment: false
-          # cdk_args: '--require-approval never'
-          cdk_stack: 'lambda-api-dynamo-stack-mm'
+      # - name: cdk diff
+      #   uses: youyo/aws-cdk-github-actions@v2
+      #   with:
+      #     cdk_subcommand: 'diff'
+      #     actions_comment: false
+      #     # cdk_args: '--require-approval never'
+      #     cdk_stack: 'lambda-api-dynamo-stack-mm'
 
-      - name: cdk deploy
-        uses: youyo/aws-cdk-github-actions@v2
-        with:
-          cdk_subcommand: 'deploy'
-          actions_comment: false
-          cdk_args: '--require-approval never'
-          cdk_stack: 'networking-stack-mm'
+      # - name: cdk deploy
+      #   uses: youyo/aws-cdk-github-actions@v2
+      #   with:
+      #     cdk_subcommand: 'deploy'
+      #     actions_comment: false
+      #     cdk_args: '--require-approval never'
+      #     cdk_stack: 'networking-stack-mm'
 
-      - name: cdk deploy
-        uses: youyo/aws-cdk-github-actions@v2
-        with:
-          cdk_subcommand: 'deploy'
-          actions_comment: false
-          cdk_args: '--require-approval never'
-          cdk_stack: 'lambda-api-dynamo-stack-mm'
+      # - name: cdk deploy
+      #   uses: youyo/aws-cdk-github-actions@v2
+      #   with:
+      #     cdk_subcommand: 'deploy'
+      #     actions_comment: false
+      #     cdk_args: '--require-approval never'
+      #     cdk_stack: 'lambda-api-dynamo-stack-mm'
+
+
+
+      
 
       
       # - name: cdk diff2
@@ -197,7 +205,7 @@ jobs:
       - name: Getting APIID
         uses: ItsKarma/aws-cli@v1.70.0
         with:
-          args: echo "APIID=$(aws cloudformation --region eu-west-1 describe-stacks --stack-name lambda-api-dynamo-stack-mm --query 'Stacks[0].Outputs[?OutputKey==`apiid`].OutputValue' --output text)" >> $GITHUB_ENV
+          args: aws cloudformation --region eu-west-1 describe-stacks --stack-name lambda-api-dynamo-stack-mm --query 'Stacks[0].Outputs[?OutputKey==`apiid`].OutputValue' --output text >> $GITHUB_ENV
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
