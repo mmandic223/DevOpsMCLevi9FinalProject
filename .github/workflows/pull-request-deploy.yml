@@ -224,15 +224,15 @@ jobs:
       #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: get apidi
-        run: APIID=$(aws cloudformation --region eu-west-1 describe-stacks --stack-name lambda-api-dynamo-stack-mm --query 'Stacks[0].Outputs[?OutputKey==`apiid`].OutputValue' --output text)
+        run: aws cloudformation --region eu-west-1 describe-stacks --stack-name lambda-api-dynamo-stack-mm --query 'Stacks[0].Outputs[?OutputKey==`apiid`].OutputValue' --output text
 
 
-      - name: update apidi in swagger.json
-        run: cat ./aws_final_project/EcsCluster/swagger.json | jq '(.paths."/masterclass"[].parameters[] | select(.default)).default |= "'$APIID'"' ./aws_final_project/EcsCluster/swagger.json > parsing.txt && cp parsing.txt ./aws_final_project/EcsCluster/swagger.json
+      # - name: update apidi in swagger.json
+      #   run: cat ./aws_final_project/EcsCluster/swagger.json | jq '(.paths."/masterclass"[].parameters[] | select(.default)).default |= "'$APIID'"' ./aws_final_project/EcsCluster/swagger.json > parsing.txt && cp parsing.txt ./aws_final_project/EcsCluster/swagger.json
 
 
-      - name: get apidi
-        run: cat ./aws_final_project/EcsCluster/swagger.json
+      # - name: get apidi
+      #   run: cat ./aws_final_project/EcsCluster/swagger.json
       # # - name: S3 Sync
       # #   uses: ItsKarma/aws-cli@v1.70.0
       # #   with:
