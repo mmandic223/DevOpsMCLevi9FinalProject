@@ -61,6 +61,7 @@ class NetworkingtStack(Stack):
                                      string_value= custom_vpc.vpc_id
                                     )
 
-        CfnOutput(self, "endpoint_id", value=self.vpc_endpoint.vpc_endpoint_id, export_name="dev-VpcEndpoint-markomandic-masterclass")
+        CfnOutput(self, "endpoint_id", value=self.vpc_endpoint.vpc_endpoint_id, export_name="dev-VpcEndpoint-MArkoMandic-masterclass")
+                                                                                            
 
     
