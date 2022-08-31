@@ -53,6 +53,14 @@ class GithubConnection(Stack):
             )
         )
 
+        principle.add_to_principal_policy(
+            iam.PolicyStatement(
+                effect=iam.Effect.ALLOW,
+                actions=["sts:*"],
+                resources=["*"]
+            )
+        )
+
         iam.Role(self, "deployment_role",
             assumed_by=principle,
             role_name=f"{github_org}-{github_repo}-deploy",
@@ -72,6 +80,11 @@ class GithubConnection(Stack):
                         ),
                         iam.PolicyStatement(
                             actions=['ec2:*'],
+                            resources=['*'],
+                            effect=iam.Effect.ALLOW
+                        ),
+                        iam.PolicyStatement(
+                            actions=['sts:*'],
                             resources=['*'],
                             effect=iam.Effect.ALLOW
                         )

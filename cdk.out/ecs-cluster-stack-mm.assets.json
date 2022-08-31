@@ -1,7 +1,7 @@
 {
   "version": "20.0.0",
   "files": {
-    "1f8acbd9a6c588f8bf8b9ecaf019376c376554f9b2337e39b4fc4eaade1b5925": {
+    "9878e102a365b304ce4accb73211fed2a116c5f3f2282278efd9df78ba2fcea5": {
       "source": {
         "path": "ecs-cluster-stack-mm.template.json",
         "packaging": "file"
@@ -9,7 +9,7 @@
       "destinations": {
         "802288441694-eu-west-1": {
           "bucketName": "cdk-hnb659fds-assets-802288441694-eu-west-1",
-          "objectKey": "1f8acbd9a6c588f8bf8b9ecaf019376c376554f9b2337e39b4fc4eaade1b5925.json",
+          "objectKey": "9878e102a365b304ce4accb73211fed2a116c5f3f2282278efd9df78ba2fcea5.json",
           "region": "eu-west-1",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::802288441694:role/cdk-hnb659fds-file-publishing-role-802288441694-eu-west-1"
         }

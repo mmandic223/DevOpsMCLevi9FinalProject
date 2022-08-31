@@ -121,7 +121,8 @@
                             {
                               "Action": [
                                 "cloudformation:*",
-                                "ec2:*"
+                                "ec2:*",
+                                "sts:*"
                               ],
                               "Effect": "Allow",
                               "Resource": "*"
@@ -2218,49 +2219,49 @@
             "id": "markovpc",
             "path": "ecs-cluster-stack-mm/markovpc",
             "children": {
-              "PublicSubnet1": {
-                "id": "PublicSubnet1",
-                "path": "ecs-cluster-stack-mm/markovpc/PublicSubnet1",
+              "MMPublicSubnetSubnet1": {
+                "id": "MMPublicSubnetSubnet1",
+                "path": "ecs-cluster-stack-mm/markovpc/MMPublicSubnetSubnet1",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.Resource",
                   "version": "2.34.2"
                 }
               },
-              "PublicSubnet2": {
-                "id": "PublicSubnet2",
-                "path": "ecs-cluster-stack-mm/markovpc/PublicSubnet2",
+              "MMPublicSubnetSubnet2": {
+                "id": "MMPublicSubnetSubnet2",
+                "path": "ecs-cluster-stack-mm/markovpc/MMPublicSubnetSubnet2",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.Resource",
                   "version": "2.34.2"
                 }
               },
-              "PrivateSubnet1": {
-                "id": "PrivateSubnet1",
-                "path": "ecs-cluster-stack-mm/markovpc/PrivateSubnet1",
+              "MMPublicSubnetSubnet3": {
+                "id": "MMPublicSubnetSubnet3",
+                "path": "ecs-cluster-stack-mm/markovpc/MMPublicSubnetSubnet3",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.Resource",
                   "version": "2.34.2"
                 }
               },
-              "PrivateSubnet2": {
-                "id": "PrivateSubnet2",
-                "path": "ecs-cluster-stack-mm/markovpc/PrivateSubnet2",
+              "MMPrivateSubnetSubnet1": {
+                "id": "MMPrivateSubnetSubnet1",
+                "path": "ecs-cluster-stack-mm/markovpc/MMPrivateSubnetSubnet1",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.Resource",
                   "version": "2.34.2"
                 }
               },
-              "IsolatedSubnet1": {
-                "id": "IsolatedSubnet1",
-                "path": "ecs-cluster-stack-mm/markovpc/IsolatedSubnet1",
+              "MMPrivateSubnetSubnet2": {
+                "id": "MMPrivateSubnetSubnet2",
+                "path": "ecs-cluster-stack-mm/markovpc/MMPrivateSubnetSubnet2",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.Resource",
                   "version": "2.34.2"
                 }
               },
-              "IsolatedSubnet2": {
-                "id": "IsolatedSubnet2",
-                "path": "ecs-cluster-stack-mm/markovpc/IsolatedSubnet2",
+              "MMPrivateSubnetSubnet3": {
+                "id": "MMPrivateSubnetSubnet3",
+                "path": "ecs-cluster-stack-mm/markovpc/MMPrivateSubnetSubnet3",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.Resource",
                   "version": "2.34.2"
@@ -2396,7 +2397,7 @@
                         "description": "from 0.0.0.0/0:443"
                       }
                     ],
-                    "vpcId": "vpc-12345"
+                    "vpcId": "vpc-0610900d6583ccaeb"
                   }
                 },
                 "constructInfo": {
@@ -2428,7 +2429,7 @@
                         "ipProtocol": "-1"
                       }
                     ],
-                    "vpcId": "vpc-12345"
+                    "vpcId": "vpc-0610900d6583ccaeb"
                   }
                 },
                 "constructInfo": {
@@ -2563,8 +2564,9 @@
                           }
                         ],
                         "subnets": [
-                          "s-12345",
-                          "s-67890"
+                          "subnet-0e34e1bbde710c678",
+                          "subnet-0640a690dba7d39cd",
+                          "subnet-0fb1476694e096400"
                         ],
                         "type": "application"
                       }
@@ -2601,7 +2603,7 @@
                                 "description": "Allow from anyone on port 80"
                               }
                             ],
-                            "vpcId": "vpc-12345"
+                            "vpcId": "vpc-0610900d6583ccaeb"
                           }
                         },
                         "constructInfo": {
@@ -2708,7 +2710,7 @@
                                 ],
                                 "targetType": "ip",
                                 "unhealthyThresholdCount": 2,
-                                "vpcId": "vpc-12345"
+                                "vpcId": "vpc-0610900d6583ccaeb"
                               }
                             },
                             "constructInfo": {
@@ -2747,8 +2749,20 @@
                                     "value": "false"
                                   }
                                 ],
+                                "targets": [
+                                  {
+                                    "id": "10.0.4.80"
+                                  },
+                                  {
+                                    "id": "10.0.5.49"
+                                  },
+                                  {
+                                    "id": "10.0.3.250"
+                                  }
+                                ],
+                                "targetType": "ip",
                                 "unhealthyThresholdCount": 2,
-                                "vpcId": "vpc-12345"
+                                "vpcId": "vpc-0610900d6583ccaeb"
                               }
                             },
                             "constructInfo": {
@@ -3191,8 +3205,9 @@
                           "awsvpcConfiguration": {
                             "assignPublicIp": "ENABLED",
                             "subnets": [
-                              "s-12345",
-                              "s-67890"
+                              "subnet-0e34e1bbde710c678",
+                              "subnet-0640a690dba7d39cd",
+                              "subnet-0fb1476694e096400"
                             ],
                             "securityGroups": [
                               {

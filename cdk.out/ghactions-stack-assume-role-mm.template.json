@@ -130,7 +130,8 @@
         {
          "Action": [
           "cloudformation:*",
-          "ec2:*"
+          "ec2:*",
+          "sts:*"
          ],
          "Effect": "Allow",
          "Resource": "*"

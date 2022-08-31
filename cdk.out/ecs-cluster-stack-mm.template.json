@@ -66,7 +66,7 @@
       "ToPort": 443
      }
     ],
-    "VpcId": "vpc-12345"
+    "VpcId": "vpc-0610900d6583ccaeb"
    },
    "Metadata": {
     "aws:cdk:path": "ecs-cluster-stack-mm/dev-AlbSg-markomandic-masterclass/Resource"
@@ -83,7 +83,7 @@
       "IpProtocol": "-1"
      }
     ],
-    "VpcId": "vpc-12345"
+    "VpcId": "vpc-0610900d6583ccaeb"
    },
    "Metadata": {
     "aws:cdk:path": "ecs-cluster-stack-mm/ecs_sec_grp/Resource"
@@ -184,8 +184,9 @@
      }
     ],
     "Subnets": [
-     "s-12345",
-     "s-67890"
+     "subnet-0e34e1bbde710c678",
+     "subnet-0640a690dba7d39cd",
+     "subnet-0fb1476694e096400"
     ],
     "Type": "application"
    },
@@ -213,7 +214,7 @@
       "ToPort": 80
      }
     ],
-    "VpcId": "vpc-12345"
+    "VpcId": "vpc-0610900d6583ccaeb"
    },
    "Metadata": {
     "aws:cdk:path": "ecs-cluster-stack-mm/mmfargateservice/LB/SecurityGroup/Resource"
@@ -291,7 +292,7 @@
     ],
     "TargetType": "ip",
     "UnhealthyThresholdCount": 2,
-    "VpcId": "vpc-12345"
+    "VpcId": "vpc-0610900d6583ccaeb"
    },
    "Metadata": {
     "aws:cdk:path": "ecs-cluster-stack-mm/mmfargateservice/LB/PublicListener/ECSGroup/Resource"
@@ -315,8 +316,20 @@
       "Value": "false"
      }
     ],
+    "Targets": [
+     {
+      "Id": "10.0.4.80"
+     },
+     {
+      "Id": "10.0.5.49"
+     },
+     {
+      "Id": "10.0.3.250"
+     }
+    ],
+    "TargetType": "ip",
     "UnhealthyThresholdCount": 2,
-    "VpcId": "vpc-12345"
+    "VpcId": "vpc-0610900d6583ccaeb"
    },
    "Metadata": {
     "aws:cdk:path": "ecs-cluster-stack-mm/mmfargateservice/LB/PublicListener/listner-target-groupGroup/Resource"
@@ -595,8 +608,9 @@
        }
       ],
       "Subnets": [
-       "s-12345",
-       "s-67890"
+       "subnet-0e34e1bbde710c678",
+       "subnet-0640a690dba7d39cd",
+       "subnet-0fb1476694e096400"
       ]
      }
     },
