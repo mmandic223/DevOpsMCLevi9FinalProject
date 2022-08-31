@@ -26,29 +26,29 @@ jobs:
           role-to-assume: arn:aws:iam::802288441694:role/mmandic223-DevOpsMCLevi9FinalProject-deploy
           aws-region: eu-west-1
 
-      - name: cdk delete
-        uses: youyo/aws-cdk-github-actions@v2
-        with:
-          cdk_subcommand: 'delete'
-          actions_comment: false
-          # cdk_args: '--require-approval never'
-          cdk_stack: 'networking-stack-mm'
+      # - name: cdk delete
+      #   uses: youyo/aws-cdk-github-actions@v2
+      #   with:
+      #     cdk_subcommand: 'delete'
+      #     actions_comment: false
+      #     # cdk_args: '--require-approval never'
+      #     cdk_stack: 'networking-stack-mm'
       
-      - name: cdk delete
-        uses: youyo/aws-cdk-github-actions@v2
-        with:
-          cdk_subcommand: 'delete'
-          actions_comment: false
-          # cdk_args: '--require-approval never'
-          cdk_stack: 'lambda-api-dynamo-stack-mm'
+      # - name: cdk delete
+      #   uses: youyo/aws-cdk-github-actions@v2
+      #   with:
+      #     cdk_subcommand: 'delete'
+      #     actions_comment: false
+      #     # cdk_args: '--require-approval never'
+      #     cdk_stack: 'lambda-api-dynamo-stack-mm'
 
-      - name: cdk delete
-        uses: youyo/aws-cdk-github-actions@v2
-        with:
-          cdk_subcommand: 'delete'
-          actions_comment: false
-          # cdk_args: '--require-approval never'
-          cdk_stack: 'ecs-cluster-stack-mm'
+      # - name: cdk delete
+      #   uses: youyo/aws-cdk-github-actions@v2
+      #   with:
+      #     cdk_subcommand: 'delete'
+      #     actions_comment: false
+      #     # cdk_args: '--require-approval never'
+      #     cdk_stack: 'ecs-cluster-stack-mm'
 
       - name: delete the github deployments and the corresponding environment
         uses: strumwolf/delete-deployment-environment@v1.1.0
