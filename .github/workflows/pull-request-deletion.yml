@@ -20,11 +20,11 @@ jobs:
       - name: checkout the files
         uses: actions/checkout@v2
 
-      - name: Assume role using OIDC
-        uses: aws-actions/configure-aws-credentials@master
-        with:
-          role-to-assume: arn:aws:iam::802288441694:role/mmandic223-DevOpsMCLevi9FinalProject-deploy
-          aws-region: eu-west-1
+      # - name: Assume role using OIDC
+      #   uses: aws-actions/configure-aws-credentials@master
+      #   with:
+      #     role-to-assume: arn:aws:iam::802288441694:role/mmandic223-DevOpsMCLevi9FinalProject-deploy
+      #     aws-region: eu-west-1
 
       # - name: cdk delete
       #   uses: youyo/aws-cdk-github-actions@v2
