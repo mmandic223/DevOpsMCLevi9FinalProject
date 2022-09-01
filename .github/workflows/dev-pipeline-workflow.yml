@@ -1,0 +1,75 @@
+name: "dev pipeline"
+on:
+  push:
+    branch: dev
+permissions:
+  id-token: write # required to use OIDC authentication
+  contents: read # required to checkout the code from the repo
+
+jobs:
+  deploy:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: inject slug/short variables
+        uses: rlespinasse/github-slug-action@v3.x
+
+      - name: set STAGE variable in environment for next steps
+        run: echo "STAGE=pr-${{ github.event.number }}-${{ env.GITHUB_HEAD_REF_SLUG }}" >> $GITHUB_ENV
+
+      - name: create a github deployment
+        uses: bobheadxi/deployments@v0.5.2
+        id: deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: ${{ env.STAGE }}
+          ref: ${{ github.head_ref }}
+          no_override: false
+          transient: true
+
+      - name: checkout the files
+        uses: actions/checkout@v2
+
+      - name: Assume role using OIDC
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          role-to-assume: arn:aws:iam::802288441694:role/mmandic223-DevOpsMCLevi9FinalProject-deploy
+          aws-region: eu-west-1
+
+      - name: cdk diff networking-stack-mm
+        uses: youyo/aws-cdk-github-actions@v2
+        with:
+          cdk_subcommand: 'diff'
+          actions_comment: false
+          cdk_stack: 'networking-stack-mm'
+
+      - name: cdk diff lambda-api-dynamo-stack-mm
+        uses: youyo/aws-cdk-github-actions@v2
+        with:
+          cdk_subcommand: 'diff'
+          actions_comment: false
+          cdk_stack: 'lambda-api-dynamo-stack-mm'
+      
+      - name: cdk diff ecs-cluster-stack-mm
+        uses: youyo/aws-cdk-github-actions@v2
+        with:
+          cdk_subcommand: 'diff'
+          actions_comment: false
+          cdk_stack: 'ecs-cluster-stack-mm'
+
+      - name: update the github deployment status
+        uses: bobheadxi/deployments@v0.5.2
+        if: always()
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status }}
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          env_url: ${{ steps.cdk_deploy.outputs.env_url }}
+
+      # - name: delete the github deployments and the corresponding environment
+      #   uses: strumwolf/delete-deployment-environment@v1.1.0
+      #   with:
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #     environment: ${{ env.STAGE }}

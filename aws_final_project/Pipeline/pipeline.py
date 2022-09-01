@@ -132,69 +132,69 @@ class PipelineStack(Stack):
 
         # ###########################################################################################################################################################3
     
-        # # Build project for Docker BuildPhase
+        # Build project for Docker BuildPhase
         
-        # project_docker = _codebuild.Project(self,
-        #                                     "code-build-mm-project-docker",
-        #                                     build_spec=_codebuild.BuildSpec.from_source_filename('aws_final_project/Codebuild/buildspecprod.yaml'),
-        #                                     environment=_codebuild.BuildEnvironment(
-        #                                        build_image=_codebuild.LinuxBuildImage.STANDARD_5_0,
-        #                                        compute_type=_codebuild.ComputeType.SMALL,
-        #                                        privileged=True
-        #                                     ),
-        #                                     source=_codebuild.Source.code_commit(
-        #                                        repository=repo,
-        #                                        branch_or_ref="refs/heads/master"
-        #                                     ),
-        #                                 )
+        project_docker = _codebuild.Project(self,
+                                            "code-build-mm-project-docker",
+                                            build_spec=_codebuild.BuildSpec.from_source_filename('aws_final_project/Codebuild/buildspecprod.yaml'),
+                                            environment=_codebuild.BuildEnvironment(
+                                               build_image=_codebuild.LinuxBuildImage.STANDARD_5_0,
+                                               compute_type=_codebuild.ComputeType.SMALL,
+                                               privileged=True
+                                            ),
+                                            source=_codebuild.Source.code_commit(
+                                               repository=repo,
+                                               branch_or_ref="refs/heads/master"
+                                            ),
+                                        )
 
 
-        # # Initializing Artifacts
+        # Initializing Artifacts
         
-        # sourceOutput = _codepipeline.Artifact()
-
-        
-        # # Initializing Pipeline
-
-        # pipeline = _codepipeline.Pipeline(self,
-        #                                   "markomandic-pipeline",
-        #                                   )
+        sourceOutput = _codepipeline.Artifact()
 
         
-        # # Describing Pipeline
+        # Initializing Pipeline
 
-        # action1 = _actions.CodeCommitSourceAction(
-        #         action_name="codecommit-action",
-        #         repository=repo,
-        #         output=sourceOutput
-        #     )
+        pipeline = _codepipeline.Pipeline(self,
+                                          "markomandic-pipeline",
+                                          )
 
-        # action2 = _actions.CodeBuildAction(
-        #         action_name="codebuilddocker-action",
+        
+        # Describing Pipeline
+
+        action1 = _actions.CodeCommitSourceAction(
+                action_name="codecommit-action",
+                repository=repo,
+                output=sourceOutput
+            )
+
+        action2 = _actions.CodeBuildAction(
+                action_name="codebuilddocker-action",
+                input=sourceOutput,
+                project=project_docker
+            )
+
+        # action3 = _actions.CodeBuildAction(
+        #         action_name="codebuild-deploy-action",
         #         input=sourceOutput,
-        #         project=project_docker
+        #         project=project_deploy
         #     )
 
-        # # action3 = _actions.CodeBuildAction(
-        # #         action_name="codebuild-deploy-action",
-        # #         input=sourceOutput,
-        # #         project=project_deploy
-        # #     )
+        pipeline.add_stage(
+            stage_name="CodeCommitSource",
+            actions=[action1]
+        )
+
+        pipeline.add_stage(
+            stage_name="Docker",
+            actions=[action2]
+        )
 
         # pipeline.add_stage(
-        #     stage_name="CodeCommitSource",
-        #     actions=[action1]
+        #     stage_name="Deploy",
+        #     actions=[action3]
         # )
-
-        # pipeline.add_stage(
-        #     stage_name="Docker",
-        #     actions=[action2]
-        # )
-
-        # # pipeline.add_stage(
-        # #     stage_name="Deploy",
-        # #     actions=[action3]
-        # # )
 
         # pipeline.add_to_role_policy(_iam.PolicyStatement(
         #     principals=[_iam.ServicePrincipal('events.amazonaws.com')],
