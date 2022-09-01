@@ -1,8 +1,8 @@
-name: "Pull Request"
+name: "main pipeline"
 on:
-  pull_request:
-    types: [opened]
-    branch: dev
+  push:
+    branches:
+      - 'main'
 permissions:
   id-token: write # required to use OIDC authentication
   contents: read # required to checkout the code from the repo
@@ -125,28 +125,6 @@ jobs:
       #     actions_comment: false
       #     cdk_args: '--require-approval never'
       #     cdk_stack: 'ecs-cluster-stack-mm'
-
-      # - name: cdk destroy ecs-cluster-stack-mm
-      #   uses: youyo/aws-cdk-github-actions@v2
-      #   with:
-      #     cdk_subcommand: 'destroy'
-      #     actions_comment: false
-      #     cdk_stack: 'ecs-cluster-stack-mm'
-
-      # - name: cdk destroy lambda-api-dynamo-stack-mm
-      #   uses: youyo/aws-cdk-github-actions@v2
-      #   with:
-      #     cdk_subcommand: 'destroy'
-      #     actions_comment: false
-      #     cdk_stack: 'lambda-api-dynamo-stack-mm'
-
-      # - name: cdk destroy networking-stack-mm
-      #   uses: youyo/aws-cdk-github-actions@v2
-      #   with:
-      #     cdk_subcommand: 'destroy'
-      #     actions_comment: false
-      #     cdk_stack: 'networking-stack-mm'
-
 
       - name: update the github deployment status
         uses: bobheadxi/deployments@v0.5.2
