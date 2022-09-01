@@ -1,8 +1,10 @@
-name: "Pull Request clean-up"
+name: "Dev commit clean-up"
 
 on:
-  pull_request:
-    types: [closed]
+  workflow_run:
+    workflows: ["dev pipeline"]
+    types:
+      - completed
 
 jobs:
   clean-up:
