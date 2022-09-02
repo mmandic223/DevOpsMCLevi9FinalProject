@@ -2,7 +2,8 @@ name: "Dev commit clean-up"
 
 on:
   workflow_run:
-    workflows: ["dev pipeline"]
+    workflows:
+      - dev pipeline
     types:
       - completed
 
@@ -17,7 +18,7 @@ jobs:
         uses: rlespinasse/github-slug-action@v3.x
 
       - name: set STAGE variable in environment for next steps
-        run: echo "STAGE=pr-${{ github.event.number }}-${{ env.GITHUB_HEAD_REF_SLUG }}" >> $GITHUB_ENV
+        run: echo "STAGE=pr-${{ env.GITHUB_SHA_SHORT }}-${{ env.GITHUB_EVENT_REF_SLUG }}" >> $GITHUB_ENV
 
       - name: checkout the files
         uses: actions/checkout@v2

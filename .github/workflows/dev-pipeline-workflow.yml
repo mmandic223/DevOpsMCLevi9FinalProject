@@ -16,7 +16,7 @@ jobs:
         uses: rlespinasse/github-slug-action@v3.x
 
       - name: set STAGE variable in environment for next steps
-        run: echo "STAGE=pr-${{ github.event.number }}-${{ env.GITHUB_HEAD_REF_SLUG }}" >> $GITHUB_ENV
+        run: echo "STAGE=pr-${{ env.GITHUB_SHA_SHORT }}-${{ env.GITHUB_EVENT_REF_SLUG }}" >> $GITHUB_ENV
 
       - name: create a github deployment
         uses: bobheadxi/deployments@v0.5.2
@@ -45,12 +45,12 @@ jobs:
           actions_comment: false
           cdk_stack: 'networking-stack-mm'
 
-      - name: cdk diff lambda-api-dynamo-stack-mm
-        uses: youyo/aws-cdk-github-actions@v2
-        with:
-          cdk_subcommand: 'diff'
-          actions_comment: false
-          cdk_stack: 'lambda-api-dynamo-stack-mm'
+      # - name: cdk diff lambda-api-dynamo-stack-mm
+      #   uses: youyo/aws-cdk-github-actions@v2
+      #   with:
+      #     cdk_subcommand: 'diff'
+      #     actions_comment: false
+      #     cdk_stack: 'lambda-api-dynamo-stack-mm'
       
       # - name: cdk diff ecs-cluster-stack-mm
       #   uses: youyo/aws-cdk-github-actions@v2
