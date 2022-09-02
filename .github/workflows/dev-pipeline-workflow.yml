@@ -16,7 +16,7 @@ jobs:
         uses: rlespinasse/github-slug-action@v3.x
 
       - name: set STAGE variable in environment for next steps
-        run: echo "STAGE=pr-${{ env.GITHUB_SHA_SHORT }}-${{ env.GITHUB_EVENT_REF_SLUG }}" >> $GITHUB_ENV
+        run: echo "STAGE=push-${{ env.GITHUB_REPOSITORY_OWNER_PART }}" >> $GITHUB_ENV
 
       - name: create a github deployment
         uses: bobheadxi/deployments@v0.5.2

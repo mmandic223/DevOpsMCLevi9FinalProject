@@ -15,7 +15,7 @@ jobs:
         uses: rlespinasse/github-slug-action@v3.x
 
       - name: set STAGE variable in environment for next steps
-        run: echo "STAGE=pr-${{ env.GITHUB_SHA_SHORT }}-${{ env.GITHUB_EVENT_REF_SLUG }}" >> $GITHUB_ENV
+        run: echo "STAGE=main-${{ env.GITHUB_REPOSITORY_OWNER_PART }}" >> $GITHUB_ENV
 
       - name: checkout the files
         uses: actions/checkout@v2
