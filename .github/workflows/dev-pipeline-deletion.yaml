@@ -6,6 +6,7 @@ on:
       - dev pipeline
     types:
       - completed
+    branch: dev
 
 jobs:
   clean-up:
