@@ -41,7 +41,7 @@ jobs:
       - name: set STAGE variable in environment for next steps
         run: |
           echo Preparing environment variables
-          TAG=$(echo ${{ env.STAGE }} | cut -c 1-7) 
+          TAG=$(echo ${{ env.STAGE }}) 
           echo $TAG
           cat .env
           sed -i '/TAG/c\TAG='"${TAG}"'' .env
