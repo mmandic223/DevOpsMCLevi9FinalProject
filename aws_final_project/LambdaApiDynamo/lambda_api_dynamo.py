@@ -31,7 +31,7 @@ class LambdaApiDynamoStack(Stack):
         # DynamoDB Table
 
         table = _dynamodb.Table(self, 
-                                "Table",
+                                "f{environment}-dynamotable-{first_name_last_name}-masterclass",
                                 partition_key=_dynamodb.Attribute(name="id", 
                                 type=_dynamodb.AttributeType.STRING),
                                 table_name=f"{environment}-dynamotable-{first_name_last_name}-masterclass",
@@ -41,7 +41,7 @@ class LambdaApiDynamoStack(Stack):
         # GET Method Lambda
 
         lambda_func_get = _lambda.Function(self, 
-                                           'lambda_api_get_func',
+                                           'f{environment}-lambdaget-{first_name_last_name}-masterclass',
                                            runtime=_lambda.Runtime.PYTHON_3_9,
                                            code=_lambda.AssetCode("./aws_final_project/Functions/LambdaGet"),
                                            handler='lambda_dynamo.lambda_handler',
@@ -53,7 +53,7 @@ class LambdaApiDynamoStack(Stack):
         # GET Method Lambda LG
 
         lambda_lg_get = _log.LogGroup(self, 
-                                      "lambda_mm_loggroup_get",
+                                      "f{environment}-lambdagetlg-{first_name_last_name}-masterclass",
                                       log_group_name=f"/aws/lambda/{lambda_func_get.function_name}",
                                       removal_policy=RemovalPolicy.DESTROY,
                                 )
@@ -62,7 +62,7 @@ class LambdaApiDynamoStack(Stack):
         # POST Method Lambda
 
         lambda_func_post = _lambda.Function(self, 
-                                            'lambda_api_post_func',
+                                            'f{environment}-lambdapost-{first_name_last_name}-masterclass',
                                             runtime=_lambda.Runtime.PYTHON_3_9,
                                             code=_lambda.AssetCode("./aws_final_project/Functions/LambdaPost"),
                                             handler='lambda_dynamo.lambda_handler',
@@ -76,7 +76,7 @@ class LambdaApiDynamoStack(Stack):
         # POST Method Lambda LG
 
         lambda_lg_post = _log.LogGroup(self, 
-                                       "lambda_mm_loggroup_post",
+                                       "f{environment}-lambdapostlg-{first_name_last_name}-masterclass",
                                        log_group_name=f"/aws/lambda/{lambda_func_post.function_name}",
                                        removal_policy=RemovalPolicy.DESTROY
                                 )
@@ -107,7 +107,7 @@ class LambdaApiDynamoStack(Stack):
         # API Gateway
 
         api_gateway =_api.RestApi(self, 
-                       "RestLambdaApi",
+                       "f{environment}-apigateway-{first_name_last_name}-masterclass",
                        policy=rest_api_policy,
                        cloud_watch_role=True,
                        rest_api_name=f"{environment}-apigw-{first_name_last_name}",
@@ -125,7 +125,7 @@ class LambdaApiDynamoStack(Stack):
                        )
         
         log_group_api = _log.LogGroup(self,
-                                        'LogsForApiGateway',
+                                        'f{environment}-apigatewaylg-{first_name_last_name}-masterclass',
                                         log_group_name=f"/aws/api/{environment}-apigw-{first_name_last_name}",
                                         retention=_log.RetentionDays.FIVE_DAYS,
                                         removal_policy=RemovalPolicy.DESTROY

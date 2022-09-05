@@ -21,41 +21,46 @@ from dotenv import dotenv_values
 
 class EcsClusterStack(Stack):
 
-    def __init__(self, scope: Construct, construct_id: str,**kwargs) -> None:
+    def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
         
         config = dotenv_values(".env")
         # Parameters from .env
 
         tag = config['TAG']
+        environment = config['ENV']
+        first_name_last_name = config['FIRST_LAST_NAME']
         
         # Initializing VPC
         
         vpc_id = _ssm.StringParameter.value_from_lookup(self,
-                                                        parameter_name='/VpcProvider/markomandic/vpcid')
+                                                        parameter_name='/VpcProvider/markomandic/vpcid'
+                                                      )
         
         custom_vpc = _ec2.Vpc.from_lookup(self,
-                                          "markovpc",
-                                          vpc_id=vpc_id)
+                                          "f{environment}-customvpc-{first_name_last_name}-masterclass",
+                                          vpc_id=vpc_id
+                                        )
 
 
         # Zone and certificate setup
 
         zone = _route53.HostedZone.from_lookup(self,
-                                                "hostedzone",
+                                                "f{environment}-hostedzone-{first_name_last_name}-masterclass",
                                                 domain_name="levi9masterclass.com",
                                             )
 
         cert = _cert.Certificate(self,
-                                "certificate",
+                                "f{environment}-certificate-{first_name_last_name}-masterclass",
                                 domain_name="*.markomandic.levi9masterclass.com",
-                                validation=_cert.CertificateValidation.from_dns(zone))
+                                validation=_cert.CertificateValidation.from_dns(zone)
+                              )
 
 
         # Initializing ECS cluster
 
         cluster = _ecs.Cluster(self, 
-                              "FargateCPCluster",
+                              "f{environment}-ecscluster-{first_name_last_name}-masterclass",
                               vpc=custom_vpc,
                               enable_fargate_capacity_providers=True,
                               container_insights=True
@@ -64,12 +69,12 @@ class EcsClusterStack(Stack):
 
         # Importing predefined ECR repository
 
-        repo = _ecr.Repository.from_repository_name(self,
+        ecr_repository = _ecr.Repository.from_repository_name(self,
                                                     "markomandicecrrepo",
                                                     "markomandicecrrepo"
                                                     )
                                                     
-        repo.grant_pull(grantee = _iam.ServicePrincipal(service = '_ecs.amazonaws.com'))
+        ecr_repository.grant_pull(grantee = _iam.ServicePrincipal(service = '_ecs.amazonaws.com'))
 
         
         ip_addrs=[]
@@ -109,24 +114,25 @@ class EcsClusterStack(Stack):
         
         # ALB and ECS Security Group
 
-        alb_sg = _ec2.SecurityGroup(self, "dev-AlbSg-markomandic-masterclass",
+        lb_securitygroup = _ec2.SecurityGroup(self, 
+                                    "f{environment}-albsg-{first_name_last_name}-masterclass",
                                     vpc=custom_vpc,
                                     allow_all_outbound=True
                                     )
 
-        alb_sg.add_ingress_rule(_ec2.Peer.any_ipv4(), _ec2.Port.tcp(443))
+        lb_securitygroup.add_ingress_rule(_ec2.Peer.any_ipv4(), _ec2.Port.tcp(443))
 
-        ecs_sg = _ec2.SecurityGroup(self,
-                                    "ecs_sec_grp",
+        ecs_securitygroup = _ec2.SecurityGroup(self,
+                                    "f{environment}-ecssg-{first_name_last_name}-masterclass",
                                     vpc=custom_vpc,
                                     allow_all_outbound=True)
-        ecs_sg.connections.allow_from(alb_sg, _ec2.Port.all_traffic())
+        ecs_securitygroup.connections.allow_from(lb_securitygroup, _ec2.Port.all_traffic())
 
 
         # ECS Service / LoadBalancer / TaskDefinition
 
         ecs_fargate_service = _patterns.ApplicationLoadBalancedFargateService(self,
-                                                                              "mmfargateservice",
+                                                                              "f{environment}-fargateservice-{first_name_last_name}-masterclass",
                                                                               protocol=_elb.ApplicationProtocol.HTTPS,
                                                                               certificate=cert,
                                                                               redirect_http=True,
@@ -139,7 +145,7 @@ class EcsClusterStack(Stack):
                                                                                 subnet_type=_ec2.SubnetType.PUBLIC
                                                                               ),
                                                                               assign_public_ip=True,
-                                                                              security_groups=[ecs_sg],                                                                            
+                                                                              security_groups=[ecs_securitygroup],                                                                            
                                                                               task_image_options=_patterns.ApplicationLoadBalancedTaskImageOptions(
                                                                                 image=_ecs.ContainerImage.from_registry(f"446835144354.dkr.ecr.eu-west-1.amazonaws.com/markomandicecrrepo:{tag}"),
                                                                                 container_port=80,                                                                       
@@ -160,7 +166,7 @@ class EcsClusterStack(Stack):
 
 
 
-        ecs_fargate_service.load_balancer.add_security_group(alb_sg)
+        ecs_fargate_service.load_balancer.add_security_group(lb_securitygroup)
         
         ecs_fargate_service.task_definition.add_to_task_role_policy( _iam.PolicyStatement(
                  actions=["dynamodb:*"],
@@ -170,7 +176,7 @@ class EcsClusterStack(Stack):
         )
 
 
-        api_target_group = ecs_fargate_service.listener.add_targets("listner-target-group", port=443,targets=ip_addrs,protocol=_elb.ApplicationProtocol.HTTPS, priority=2 ,conditions=[_elb.ListenerCondition.path_patterns(['/prod/api/*'])])
+        api_target_group = ecs_fargate_service.listener.add_targets("f{environment}-apitg-{first_name_last_name}-masterclass", port=443,targets=ip_addrs,protocol=_elb.ApplicationProtocol.HTTPS, priority=2 ,conditions=[_elb.ListenerCondition.path_patterns(['/prod/api/*'])])
         
         # Granting ECS permissions for ECR
 
