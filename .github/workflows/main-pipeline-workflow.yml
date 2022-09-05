@@ -19,7 +19,7 @@ jobs:
         uses: rlespinasse/github-slug-action@v3.x
 
       - name: set STAGE variable in environment for next steps
-        run: echo "STAGE=main-${{ github.event.number }}" >> $GITHUB_ENV
+        run: echo "STAGE=main-${GITHUB_RUN_ID}" >> $GITHUB_ENV
 
       - name: create a github deployment
         uses: bobheadxi/deployments@v0.5.2
