@@ -46,7 +46,7 @@ class NetworkingtStack(Stack):
         # VPC Endpoint for API Gateway
         
         self.vpc_endpoint = _ec2.InterfaceVpcEndpoint(self,
-                                                 "APIendpoint",
+                                                 "f{environment}-apiendpoint-{first_name_last_name}-masterclass",
                                                  vpc=custom_vpc,
                                                  service=_ec2.InterfaceVpcEndpointAwsService.APIGATEWAY
                                             )
@@ -56,12 +56,12 @@ class NetworkingtStack(Stack):
         # Exporting vpc_id and endpoint_id for later use
 
         vpcid = _ssm.StringParameter(self,
-                                     'vpc_id',
+                                     'f{environment}-vpcidparam-{first_name_last_name}-masterclass',
                                      parameter_name= '/VpcProvider/markomandic/vpcid',
                                      string_value= custom_vpc.vpc_id
                                     )
 
-        CfnOutput(self, "endpoint_id", value=self.vpc_endpoint.vpc_endpoint_id, export_name="dev-VpcEndpoint-MArkoMandic-masterclass")
+        CfnOutput(self, "endpoint_id", value=self.vpc_endpoint.vpc_endpoint_id, export_name="f{environment}-endpointid-{first_name_last_name}-masterclass")
                                                                                             
 
     

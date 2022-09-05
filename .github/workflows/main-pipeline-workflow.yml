@@ -41,7 +41,7 @@ jobs:
       - name: set STAGE variable in environment for next steps
         run: |
           echo Preparing environment variables
-          TAG=$(echo ${{ github.event.number }} | cut -c 1-7) 
+          TAG=$(echo ${{ env.STAGE }} | cut -c 1-7) 
           echo $TAG
           cat .env
           sed -i '/TAG/c\TAG='"${TAG}"'' .env
@@ -55,12 +55,12 @@ jobs:
           role-to-assume: arn:aws:iam::802288441694:role/mmandic223-DevOpsMCLevi9FinalProject-deploy
           aws-region: eu-west-1
 
-      - name: cdk diff networking-stack-mm
-        uses: youyo/aws-cdk-github-actions@v2
-        with:
-          cdk_subcommand: 'diff'
-          actions_comment: false
-          cdk_stack: 'networking-stack-mm'
+      # - name: cdk diff networking-stack-mm
+      #   uses: youyo/aws-cdk-github-actions@v2
+      #   with:
+      #     cdk_subcommand: 'diff'
+      #     actions_comment: false
+      #     cdk_stack: 'networking-stack-mm'
 
       # - name: cdk diff lambda-api-dynamo-stack-mm
       #   uses: youyo/aws-cdk-github-actions@v2
@@ -97,17 +97,17 @@ jobs:
       #   run: cat ./aws_final_project/EcsCluster/swagger.json | jq '(.paths."/masterclass"[].parameters[] | select(.default)).default |= "'${{ env.APIID }}'"' ./aws_final_project/EcsCluster/swagger.json > parsing.txt && cp parsing.txt ./aws_final_project/EcsCluster/swagger.json
 
 
-      # - name: login to ecr
-      #   run: aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 802288441694.dkr.ecr.eu-west-1.amazonaws.com
+      - name: login to ecr
+        run: aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 802288441694.dkr.ecr.eu-west-1.amazonaws.com
 
-      # - name: build image
-      #   run: docker build -t markomandic/openapiui ./aws_final_project/EcsCluster/
+      - name: build image
+        run: docker build -t markomandic/openapiui ./aws_final_project/EcsCluster/
 
-      # - name: tag image
-      #   run: docker tag markomandic/openapiui 802288441694.dkr.ecr.eu-west-1.amazonaws.com/markomandicecrrepo:${{ env.TAG }}
+      - name: tag image
+        run: docker tag markomandic/openapiui 802288441694.dkr.ecr.eu-west-1.amazonaws.com/markomandicecrrepo:${{ env.TAG }}
 
-      # - name: push image
-      #   run: docker push 802288441694.dkr.ecr.eu-west-1.amazonaws.com/markomandicecrrepo:${{ env.TAG }}
+      - name: push image
+        run: docker push 802288441694.dkr.ecr.eu-west-1.amazonaws.com/markomandicecrrepo:${{ env.TAG }}
       
       # - name: cdk diff ecs-cluster-stack-mm
       #   uses: youyo/aws-cdk-github-actions@v2

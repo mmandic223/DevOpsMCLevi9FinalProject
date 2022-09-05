@@ -68,9 +68,3 @@ jobs:
           status: ${{ job.status }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env_url: ${{ steps.cdk_deploy.outputs.env_url }}
-
-      # - name: delete the github deployments and the corresponding environment
-      #   uses: strumwolf/delete-deployment-environment@v1.1.0
-      #   with:
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #     environment: ${{ env.STAGE }}
